@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FragmentsBonus</string>
+    <string name="WelcometoQuickPrep">Welcome to QuickPrep!</string>
+    <string name="Effortless">Effortless cooking starts here.</string>
+    <string name="GetFreshIngredients">Get fresh ingredients delivered and cook</string>
+    <string name="DeliciousRecipes">delicious recipes in minutes.</string>
+    <string name="GetStarted">Get Started</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Signupemail">Sign up with email</string>
+    <string name="socialsignup">Or use social sign up</string>
+    <string name="facebookway">Continue with Facebook</string>
+    <string name="googleway">Continue with Google</string>
+    <string name="haveaccount">Already have account?</string>
+    <string name="login">Login?</string>
+</resources>
