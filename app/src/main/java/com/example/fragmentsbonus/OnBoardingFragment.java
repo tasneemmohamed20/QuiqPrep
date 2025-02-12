@@ -42,7 +42,7 @@ public class OnBoardingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        button = view.findViewById(R.id.button);
+        button = view.findViewById(R.id.signup_email);
         button.setOnClickListener(v -> {
         Navigation.findNavController(view).navigate(R.id.action_onBoardingFragment_to_loginOptionFragment);        });
         OnBoardingFragmentDirections.ActionOnBoardingFragmentToLoginOptionFragment action =

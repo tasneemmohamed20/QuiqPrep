@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "740781462145",
+    "project_id": "quickprep-8c202",
+    "storage_bucket": "quickprep-8c202.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740781462145:android:fa14e24436ace9537f7380",
+        "android_client_info": {
+          "package_name": "com.example.fragmentsbonus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "740781462145-agvi10e4l7k32qvav3jljmt19gg41l26.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fragmentsbonus",
+            "certificate_hash": "541a3a5737eb259eb35a8d18a209d87a9b2bcf0c"
+          }
+        },
+        {
+          "client_id": "740781462145-nfadb8hsk4mq73huve69j4gqcoqoa20e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZqJtIe2haf7BZLlVlji12UtRi_Dg5DJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "740781462145-nfadb8hsk4mq73huve69j4gqcoqoa20e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

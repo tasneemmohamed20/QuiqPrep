@@ -13,4 +13,11 @@
     <string name="googleway">Continue with Google</string>
     <string name="haveaccount">Already have account?</string>
     <string name="login">Login?</string>
+    <string name="creatNewAccount">Create your Account</string>
+    <string name="enteremail">E-mail</string>
+    <string name="enterPassword">Password</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="Signup">Sign up</string>
+    <string name="LoginButton">Login</string>
+    <string name="LoginCaption">Login</string>
 </resources>

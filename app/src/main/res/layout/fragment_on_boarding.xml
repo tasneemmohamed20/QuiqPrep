@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv3" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/signup_email"
         android:layout_width="334dp"
         android:layout_height="56dp"
         android:layout_marginStart="38dp"

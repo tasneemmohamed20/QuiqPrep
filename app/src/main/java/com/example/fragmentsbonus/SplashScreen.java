@@ -31,9 +31,9 @@ public class SplashScreen extends AppCompatActivity {
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 if(destination.getId() == R.id.splashFragment){
                     getSupportActionBar().hide();
-//                } else if (destination.getId() == R.id.loginOptionFragment) {
-//                    getSupportActionBar().show();
-//                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                } else if (destination.getId() == R.id.homeFragment) {
+                    getSupportActionBar().show();
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 //                } else {
 //                    getSupportActionBar().show();
                 }
