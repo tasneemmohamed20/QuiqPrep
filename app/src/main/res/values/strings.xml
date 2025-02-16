@@ -20,4 +20,5 @@
     <string name="Signup">Sign up</string>
     <string name="LoginButton">Login</string>
     <string name="LoginCaption">Login</string>
+    <string name="welcome">Hello, </string>
 </resources>
