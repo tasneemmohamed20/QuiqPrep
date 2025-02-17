@@ -1,55 +1,43 @@
 package com.example.fragmentsbonus.home.presenter.categories;
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-
-import com.example.fragmentsbonus.home.model.categories.CategoriesItem;
-import com.example.fragmentsbonus.home.model.categories.CategoryResponse;
+import com.example.fragmentsbonus.database.MealLocalDataSourceImp;
+import com.example.fragmentsbonus.models.categories.CategoryResponse;
 import com.example.fragmentsbonus.home.view.categories.CategoriesView;
-import com.example.fragmentsbonus.network.ApiClient;
-import com.example.fragmentsbonus.network.ApiService;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.fragmentsbonus.models.repository.MealsRepositoryImplementation;
+import com.example.fragmentsbonus.network.MealsRemoteDataSourceImplementation;
+import com.example.fragmentsbonus.network.NetworkCallBack;
 
 public class CategoriesPresenterImplementation implements  CategoriesPresenter {
-
     private CategoriesView view;
-    private final ApiService apiService;
-    private LifecycleOwner lifecycleOwner;
+    private final MealsRepositoryImplementation repository;
 
-    public CategoriesPresenterImplementation(CategoriesView view, LifecycleOwner lifecycleOwner, Context context) {
-        apiService = ApiClient.getClient().create(ApiService.class);
+
+    public CategoriesPresenterImplementation(CategoriesView view,Context context) {
         this.view = view;
+        this.repository = MealsRepositoryImplementation.getInstance(MealsRemoteDataSourceImplementation.getInstance(), MealLocalDataSourceImp.getInstance(context));
     }
 
     @Override
     public void loadCategories() {
 
         view.showLoading();
-
-        Call<CategoryResponse> call = apiService.getCategories();
-        call.enqueue(new Callback<CategoryResponse>() {
+        repository.getCategories(new NetworkCallBack() {
             @Override
-            public void onResponse(@NonNull Call<CategoryResponse> call, @NonNull Response<CategoryResponse> response) {
+            public void onSuccess(Object response) {
                 view.hideLoading();
-                if (response.isSuccessful() && response.body() != null) {
-                    List<CategoriesItem> categories = response.body().getCategories();
-                    view.showCategories(categories);
-                } else {
-                    view.onErrorLoading(response.message());
+                if (response instanceof CategoryResponse) {
+                    view.showCategories(((CategoryResponse) response).getCategories());
+                }
+                else {
+                    view.onErrorLoading("Error Loading");
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<CategoryResponse> call, @NonNull Throwable t) {
+            public void onError(String error) {
                 view.hideLoading();
-                view.onErrorLoading("Error Loading");
+                view.onErrorLoading(error);
             }
         });
     }

@@ -4,17 +4,26 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.fragmentsbonus.home.model.random_meal.MealsItem;
+import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.List;
 
 public class MealLocalDataSourceImp implements MealsLocalDataSource {
     private final MealDao mealsDao;
+    private static MealLocalDataSourceImp instance;
 
     public MealLocalDataSourceImp(Context context) {
         AppDatabase db = AppDatabase.getInstance(context);
         this.mealsDao = db.mealsDao();
     }
+
+    public static MealsLocalDataSource getInstance(Context context) {
+        if (instance == null) {
+            instance = new MealLocalDataSourceImp(context);
+        }
+        return instance;
+    }
+
     @Override
     public void insertMeal(MealsItem meal) {
         new Thread(() -> {

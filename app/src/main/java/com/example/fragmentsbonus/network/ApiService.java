@@ -1,7 +1,7 @@
 package com.example.fragmentsbonus.network;
 
-import com.example.fragmentsbonus.home.model.categories.CategoryResponse;
-import com.example.fragmentsbonus.home.model.random_meal.MealResponse;
+import com.example.fragmentsbonus.models.categories.CategoryResponse;
+import com.example.fragmentsbonus.models.meals.MealResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -1,4 +1,4 @@
-package com.example.fragmentsbonus.home.view;
+package com.example.fragmentsbonus.home.view.cat_meals_list;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fragmentsbonus.R;
 
-import com.example.fragmentsbonus.home.model.random_meal.MealsItem;
+import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.List;
 
 public class CatMealsAdapter extends RecyclerView.Adapter<CatMealsAdapter.CatMealsViewHolder> {
-    private List<MealsItem> meals;
+    private final List<MealsItem> meals;
 
     public CatMealsAdapter(List<MealsItem> meals) {
         this.meals = meals;
@@ -38,9 +38,6 @@ public class CatMealsAdapter extends RecyclerView.Adapter<CatMealsAdapter.CatMea
             // Set title
             holder.titleText.setText(meal.getStrMeal() != null ?
                     meal.getStrMeal() : "No title");
-
-//            holder.descriptionText.setText(meal.getStrInstructions() != null ?
-//                    meal.getStrInstructions() : "No description");
 
             // Load image
             if (meal.getStrMealThumb() != null && !meal.getStrMealThumb().isEmpty()) {

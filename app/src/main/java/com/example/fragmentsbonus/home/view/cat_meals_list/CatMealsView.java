@@ -1,6 +1,6 @@
 package com.example.fragmentsbonus.home.view.cat_meals_list;
 
-import com.example.fragmentsbonus.home.model.random_meal.MealsItem;
+import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.List;
 

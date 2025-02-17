@@ -1,4 +1,4 @@
-package com.example.fragmentsbonus.home.model.categories;
+package com.example.fragmentsbonus.models.categories;
 
 import com.google.gson.annotations.SerializedName;
 

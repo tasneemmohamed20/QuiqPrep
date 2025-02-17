@@ -1,51 +1,44 @@
 package com.example.fragmentsbonus.home.presenter.random_meal;
 
 import android.content.Context;
-
-import androidx.lifecycle.LifecycleOwner;
-
-import com.example.fragmentsbonus.home.model.random_meal.MealResponse;
+import com.example.fragmentsbonus.database.MealLocalDataSourceImp;
+import com.example.fragmentsbonus.models.meals.MealResponse;
 import com.example.fragmentsbonus.home.view.random_meal.RandomMealView;
-import com.example.fragmentsbonus.network.ApiClient;
-import com.example.fragmentsbonus.network.ApiService;
-
-import retrofit2.Call;
-import retrofit2.Callback;
+import com.example.fragmentsbonus.models.repository.MealsRepositoryImplementation;
+import com.example.fragmentsbonus.network.MealsRemoteDataSourceImplementation;
+import com.example.fragmentsbonus.network.NetworkCallBack;
 
 public class RandomMealPresenterImplementation implements RandomMealPresenter {
 
     private RandomMealView view;
-    private final ApiService apiService;
-    private LifecycleOwner lifecycleOwner;
-
-    public RandomMealPresenterImplementation(RandomMealView view, Context context, LifecycleOwner lifecycleOwner) {
+    private final MealsRepositoryImplementation repository;
+    public RandomMealPresenterImplementation(RandomMealView view, Context context) {
         this.view = view;
-        apiService = ApiClient.getClient().create(ApiService.class);
+        this.repository = MealsRepositoryImplementation.getInstance(MealsRemoteDataSourceImplementation.getInstance(), MealLocalDataSourceImp.getInstance(context));
     }
 
     @Override
     public void loadRandomMeal() {
 
         view.showLoading();
-
-        Call<MealResponse> call = apiService.getRandomMeal();
-        call.enqueue(new Callback<MealResponse>() {
+        repository.getRandomMeals(new NetworkCallBack() {
             @Override
-            public void onResponse(Call<MealResponse> call, retrofit2.Response<MealResponse> response) {
+            public void onSuccess(Object response) {
                 view.hideLoading();
-                if (response.isSuccessful() && response.body() != null) {
-                    view.showMeal(response.body().getMeals().get(0));
-                } else {
-                    view.onErrorLoading(response.message());
+                if (response instanceof MealResponse) {
+                    view.showMeal(((MealResponse) response).getMeals().get(0));
+                }
+                else {
+                    view.onErrorLoading("Error Loading");
                 }
             }
 
             @Override
-            public void onFailure(Call<MealResponse> call, Throwable t) {
+            public void onError(String error) {
                 view.hideLoading();
-                view.onErrorLoading("Error Loading");
+                view.onErrorLoading(error);
             }
-        });
+        } );
 
     }
     @Override

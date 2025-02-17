@@ -3,7 +3,7 @@ package com.example.fragmentsbonus.database;
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
 
-import com.example.fragmentsbonus.home.model.random_meal.MealsItem;
+import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
-package com.example.fragmentsbonus.home.model.categories;
+package com.example.fragmentsbonus.models.categories;
 
 import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 
 public class CategoryResponse{

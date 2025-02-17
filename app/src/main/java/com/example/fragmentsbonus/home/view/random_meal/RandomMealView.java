@@ -1,6 +1,6 @@
 package com.example.fragmentsbonus.home.view.random_meal;
 
-import com.example.fragmentsbonus.home.model.random_meal.MealsItem;
+import com.example.fragmentsbonus.models.meals.MealsItem;
 
 public interface RandomMealView {
     void showLoading();

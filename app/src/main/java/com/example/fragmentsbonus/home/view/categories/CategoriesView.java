@@ -1,6 +1,6 @@
 package com.example.fragmentsbonus.home.view.categories;
 
-import com.example.fragmentsbonus.home.model.categories.CategoriesItem;
+import com.example.fragmentsbonus.models.categories.CategoriesItem;
 
 import java.util.List;
 

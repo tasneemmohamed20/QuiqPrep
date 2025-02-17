@@ -15,8 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fragmentsbonus.R;
-import com.example.fragmentsbonus.home.model.categories.CategoriesItem;
-import com.example.fragmentsbonus.home.model.random_meal.MealsItem;
+import com.example.fragmentsbonus.models.categories.CategoriesItem;
+import com.example.fragmentsbonus.models.meals.MealsItem;
 import com.example.fragmentsbonus.home.presenter.categories.CategoriesPresenter;
 import com.example.fragmentsbonus.home.presenter.categories.CategoriesPresenterImplementation;
 import com.example.fragmentsbonus.home.presenter.random_meal.RandomBinder;
@@ -34,23 +34,14 @@ import java.util.List;
 public class HomeFragment extends Fragment implements RandomMealView, CategoriesView {
 
     private CategoriesAdapter categoriesAdapter;
-
-    List <String> tabs;
-    List<Fragment> fragments;
     ProgressBar progressBar;
-    RandomMealPresenter presnter;
+    RandomMealPresenter presenter;
     CardView cardView;
     RandomBinder binder;
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(String param1, String param2)  {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,16 +61,7 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         ViewPager2 viewPager = view.findViewById(R.id.pager);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
-//        tabs = List.of("Breakfast", "Lunch", "Dinner", "Dessert", "Snacks");
-//        fragments = new ArrayList<>();
-//        for (String tab : tabs) {
-//            RecipeListFragment fragment = new RecipeListFragment();
-//            Bundle args = new Bundle();
-//            args.putString("category", tab);
-//            fragment.setArguments(args);
-//            fragments.add(fragment);
-//            categoriesAdapter.addFragment(fragment, tab);
-//        }
+
         categoriesAdapter = new CategoriesAdapter(requireActivity());
         viewPager.setAdapter(categoriesAdapter);
 
@@ -93,10 +75,10 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presnter = new RandomMealPresenterImplementation(this,  requireContext(), this);
-        presnter.loadRandomMeal();
+        presenter = new RandomMealPresenterImplementation(this, requireContext());
+        presenter.loadRandomMeal();
 
-        CategoriesPresenter presenter = new CategoriesPresenterImplementation(this, requireActivity(), requireContext());
+        CategoriesPresenter presenter = new CategoriesPresenterImplementation(this, requireContext());
         presenter.loadCategories();
 
     }
@@ -130,15 +112,11 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-//    @Override
-//    public CategoriesAdapter getAdapter() {
-//        return categoriesAdapter;
-//    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (presnter != null)
-            presnter.detachView();
+        if (presenter != null)
+            presenter.detachView();
     }
 }

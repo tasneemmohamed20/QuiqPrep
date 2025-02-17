@@ -1,4 +1,4 @@
-package com.example.fragmentsbonus.home.model.random_meal;
+package com.example.fragmentsbonus.models.meals;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
