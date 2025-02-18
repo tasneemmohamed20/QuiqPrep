@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fragmentsbonus.R;
+import com.example.fragmentsbonus.home.view.click_listener.OnMealClickListener;
 import com.example.fragmentsbonus.models.categories.CategoriesItem;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 import com.example.fragmentsbonus.home.presenter.categories.CategoriesPresenter;
@@ -31,7 +33,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements RandomMealView, CategoriesView {
+public class HomeFragment extends Fragment implements RandomMealView, CategoriesView, OnMealClickListener {
 
     private CategoriesAdapter categoriesAdapter;
     ProgressBar progressBar;
@@ -56,9 +58,9 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         progressBar = view.findViewById(R.id.progressBar);
         cardView = view.findViewById(R.id.cardViewrand);
         binder = new RandomBinder();
+        binder.setOnMealClickListener(this);
 
-
-        TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+        TabLayout tabLayout = view.findViewById(R.id.tab_layout_details);
         ViewPager2 viewPager = view.findViewById(R.id.pager);
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 
@@ -118,5 +120,12 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         super.onDestroy();
         if (presenter != null)
             presenter.detachView();
+    }
+
+    @Override
+    public void onMealClick(MealsItem meal) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("meal", meal);
+        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailsFragment, bundle);
     }
 }

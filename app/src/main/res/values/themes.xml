@@ -5,7 +5,11 @@
         <item name="colorPrimary">@color/DarkRed</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/BlackishGrey</item>
-
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/DarkRed</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
 

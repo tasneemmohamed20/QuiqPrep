@@ -1,5 +1,6 @@
 package com.example.fragmentsbonus.home.view.cat_meals_list;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fragmentsbonus.R;
 
+import com.example.fragmentsbonus.home.view.click_listener.OnMealClickListener;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.List;
 
 public class CatMealsAdapter extends RecyclerView.Adapter<CatMealsAdapter.CatMealsViewHolder> {
     private final List<MealsItem> meals;
+    private OnMealClickListener onMealClickListener;
 
-    public CatMealsAdapter(List<MealsItem> meals) {
+    public CatMealsAdapter(List<MealsItem> meals, OnMealClickListener onMealClickListener) {
         this.meals = meals;
+        this.onMealClickListener = onMealClickListener;
+
     }
 
     @NonNull
@@ -35,10 +40,14 @@ public class CatMealsAdapter extends RecyclerView.Adapter<CatMealsAdapter.CatMea
     public void onBindViewHolder(@NonNull CatMealsViewHolder holder, int position) {
         MealsItem meal = meals.get(position);
         if (meal != null) {
+            holder.itemView.setOnClickListener(v -> {
+                if (onMealClickListener != null) {
+                    onMealClickListener.onMealClick(meal);
+                }
+            });
             // Set title
             holder.titleText.setText(meal.getStrMeal() != null ?
                     meal.getStrMeal() : "No title");
-
             // Load image
             if (meal.getStrMealThumb() != null && !meal.getStrMealThumb().isEmpty()) {
                 try {

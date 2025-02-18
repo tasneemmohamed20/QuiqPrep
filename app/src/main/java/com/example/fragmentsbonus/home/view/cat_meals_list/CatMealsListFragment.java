@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fragmentsbonus.R;
+import com.example.fragmentsbonus.home.view.click_listener.OnMealClickListener;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 import com.example.fragmentsbonus.home.presenter.cat_meal.CatMealsPresenter;
 import com.example.fragmentsbonus.home.presenter.cat_meal.CatMealsPresenterImplementation;
@@ -21,7 +23,7 @@ import com.example.fragmentsbonus.home.presenter.cat_meal.CatMealsPresenterImple
 import java.util.List;
 
 
-public class CatMealsListFragment extends Fragment implements CatMealsView {
+public class CatMealsListFragment extends Fragment implements CatMealsView, OnMealClickListener {
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private CatMealsPresenter presenter;
@@ -60,7 +62,7 @@ public class CatMealsListFragment extends Fragment implements CatMealsView {
     @Override
     public void showMeals(List<MealsItem> meals) {
 
-        CatMealsAdapter adapter = new CatMealsAdapter(meals);
+        CatMealsAdapter adapter = new CatMealsAdapter(meals, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -69,4 +71,13 @@ public class CatMealsListFragment extends Fragment implements CatMealsView {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onMealClick(MealsItem meal) {
+        Bundle args = new Bundle();
+//        args.putString("idMeal", meal.getIdMeal());
+//        args.putString("strMeal", meal.getStrMeal());
+//        args.putString("strMealThumb", meal.getStrMealThumb());
+        args.putParcelable("meal", meal);
+        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailsFragment, args);
+    }
 }

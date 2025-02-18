@@ -40,6 +40,11 @@
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
+    <style name="Text5">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
     <style name="LargeButton" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_width">334dp</item>
         <item name="android:layout_height">56dp</item>
@@ -88,6 +93,17 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeBottomLeft">20dp</item>
         <item name="cornerSizeBottomRight">20dp</item>
+    </style>
+
+
+    <style name="CustomCardCorners2" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners2</item>
+    </style>
+
+    <style name="ShapeAppearance_custom_corners2" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">40dp</item>
+        <item name="cornerSizeTopRight">40dp</item>
     </style>
 
 

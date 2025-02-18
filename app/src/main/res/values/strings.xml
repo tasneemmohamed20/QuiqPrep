@@ -21,4 +21,6 @@
     <string name="LoginButton">Login</string>
     <string name="LoginCaption">Login</string>
     <string name="welcome">Hello, </string>
+    <string name="description">description</string>
+    <string name="title">Title</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.fragmentsbonus;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SplashFragment extends Fragment {
 
-
+    private FirebaseAuth mAuth;
 
     public SplashFragment() {
         // Required empty public constructor
@@ -24,6 +26,7 @@ public class SplashFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -37,7 +40,13 @@ public class SplashFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         new Handler().postDelayed(() -> {
-            Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_onBoardingFragment);
-        }, 3000);
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            if (currentUser != null) {
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_splashFragment_to_homeFragment);
+            } else {
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_splashFragment_to_onBoardingFragment);
+            }        }, 3000);
     }
 }
