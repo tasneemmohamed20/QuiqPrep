@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +27,6 @@ public class DetailsFragment extends Fragment implements DetailsView {
     private TabLayout tabLayout;
     private DetailsAdapter pagerAdapter;
     private DetailsPresenter presenter;
-    private MealsItem meal;
     private TextView titleText;
     private TextView country;
     private ImageView mealImage;
@@ -58,7 +55,8 @@ public class DetailsFragment extends Fragment implements DetailsView {
     }
 
     private void setupViewPager() {
-        meal = getArguments().getParcelable("meal");
+        assert getArguments() != null;
+        MealsItem meal = getArguments().getParcelable("meal");
         presenter = new DetailsPresenterImp(this, meal);
         pagerAdapter = new DetailsAdapter(requireActivity(), meal);
 
@@ -88,16 +86,6 @@ public class DetailsFragment extends Fragment implements DetailsView {
     }
 
     @Override
-    public void showLoading() {
-        // Implement loading UI
-    }
-
-    @Override
-    public void hideLoading() {
-        // Hide loading UI
-    }
-
-    @Override
     public void showError(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
@@ -115,8 +103,6 @@ public class DetailsFragment extends Fragment implements DetailsView {
                 .centerCrop()
                 .into(mealImage);
 
-        Log.d("DetailsFragment", "Image URL: " + meal.getStrMealThumb());
-        Toast.makeText(requireContext(), "Image URL: " + meal.getStrMealThumb(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

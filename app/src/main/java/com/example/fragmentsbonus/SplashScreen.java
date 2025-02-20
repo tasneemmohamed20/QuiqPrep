@@ -25,39 +25,29 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
-            Insets systemBars = null;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars()).toPlatformInsets();
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            }
-            return insets;
-        });
+
         setContentView(R.layout.splash_screen);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView2);
-//        navController = navHostFragment.getNavController();
-//        NavigationUI.setupActionBarWithNavController(this, navController);
+        navController = navHostFragment.getNavController();
+        NavigationUI.setupActionBarWithNavController(this, navController);
 
-//        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener(){
-//            @Override
-//            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-//                if(destination.getId() == R.id.splashFragment){
-//                    getSupportActionBar().hide();
-////                } else if (destination.getId() == R.id.homeFragment) {
-////                    getSupportActionBar().show();
-////                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-////                } else {
-////                    getSupportActionBar().show();
-//                }
-//            }
-//        });
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener(){
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(destination.getId() == R.id.splashFragment){
+                    getSupportActionBar().hide();
+//                } else if (destination.getId() == R.id.homeFragment) {
+//                    getSupportActionBar().show();
+//                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//                } else {
+//                    getSupportActionBar().show();
+                }
+            }
+        });
     }
 
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        return navController.navigateUp() || super.onSupportNavigateUp();
-//    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp() || super.onSupportNavigateUp();
+    }
 }

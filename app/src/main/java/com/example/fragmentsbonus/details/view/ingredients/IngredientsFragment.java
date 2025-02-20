@@ -42,7 +42,6 @@ public class IngredientsFragment extends Fragment implements IngredientsView {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
            meal = getArguments().getParcelable("meal");
-           Toast.makeText(getContext(), meal.getStrIngredient2(), Toast.LENGTH_SHORT).show();
         }
     }
 
