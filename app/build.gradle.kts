@@ -44,6 +44,10 @@ dependencies {
     implementation (libs.navigation.fragment)
     implementation (libs.navigation.ui)
     implementation(platform(libs.firebase.bom))
+    implementation(libs.swiperefreshlayout)
+    implementation(libs.room.rxjava3)
+    implementation (libs.rxjava3.retrofit.adapter)
+    implementation (libs.rxandroid)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
     implementation(libs.retrofit)
@@ -54,7 +58,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.converter.gson)
-    implementation(libs.room.runtime)
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
 

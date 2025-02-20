@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.fragmentsbonus.details.view.ingredients.IngredientsFragment;
 import com.example.fragmentsbonus.details.view.instructions.InstructionsFragment;
+import com.example.fragmentsbonus.details.view.tutorial.TutorialFragment;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 
 // DetailsPagerAdapter.java
@@ -27,8 +28,8 @@ public class DetailsAdapter extends FragmentStateAdapter {
                 return IngredientsFragment.newInstance(meal);
            case 1:
                return InstructionsFragment.newInstance(meal);
-//            case 2:
-//                return TutorialFragment.newInstance(meal);
+            case 2:
+                return TutorialFragment.newInstance(meal);
             default:
                 return new Fragment();
         }

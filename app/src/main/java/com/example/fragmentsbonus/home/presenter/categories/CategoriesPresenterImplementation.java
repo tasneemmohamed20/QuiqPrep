@@ -2,14 +2,16 @@ package com.example.fragmentsbonus.home.presenter.categories;
 
 import android.content.Context;
 import com.example.fragmentsbonus.database.MealLocalDataSourceImp;
-import com.example.fragmentsbonus.models.categories.CategoryResponse;
 import com.example.fragmentsbonus.home.view.categories.CategoriesView;
 import com.example.fragmentsbonus.models.repository.MealsRepositoryImplementation;
 import com.example.fragmentsbonus.network.MealsRemoteDataSourceImplementation;
-import com.example.fragmentsbonus.network.NetworkCallBack;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CategoriesPresenterImplementation implements  CategoriesPresenter {
     private CategoriesView view;
+    private Disposable disposable;
     private final MealsRepositoryImplementation repository;
 
 
@@ -20,30 +22,31 @@ public class CategoriesPresenterImplementation implements  CategoriesPresenter {
 
     @Override
     public void loadCategories() {
-
         view.showLoading();
-        repository.getCategories(new NetworkCallBack() {
-            @Override
-            public void onSuccess(Object response) {
-                view.hideLoading();
-                if (response instanceof CategoryResponse) {
-                    view.showCategories(((CategoryResponse) response).getCategories());
-                }
-                else {
-                    view.onErrorLoading("Error Loading");
-                }
-            }
-
-            @Override
-            public void onError(String error) {
-                view.hideLoading();
-                view.onErrorLoading(error);
-            }
-        });
+        disposable = repository.getCategories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (view != null) {
+                                view.hideLoading();
+                                view.showCategories(response.getCategories());
+                            }
+                        },
+                        error -> {
+                            if (view != null) {
+                                view.hideLoading();
+                                view.onErrorLoading(error.getMessage());
+                            }
+                        }
+                );
     }
 
     @Override
     public void detachView() {
         view = null;
+        if (disposable != null) {
+            disposable.dispose();
+        }
     }
 }

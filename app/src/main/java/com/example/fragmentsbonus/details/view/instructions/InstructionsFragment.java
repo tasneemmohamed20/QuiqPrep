@@ -56,7 +56,6 @@ public class InstructionsFragment extends Fragment implements InstructionsView{
         super.onViewCreated(view, savedInstanceState);
         presenter = new InstructionsPresenterImp(this, meal);
         presenter.loadInstructions();
-
     }
 
     @Override

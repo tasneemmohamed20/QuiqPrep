@@ -1,4 +1,4 @@
-package com.example.fragmentsbonus.home.presenter.random_meal;
+package com.example.fragmentsbonus.home.view.random_meal;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -12,9 +12,6 @@ public class RandomBinder {
     private ImageView foodImage;
     private TextView titleText;
     private TextView descriptionText;
-    private TextView timeText;
-    private TextView ratingText;
-    private TextView priceText;
     private View rootView;
 
     private OnMealClickListener onMealClickListener;
@@ -46,7 +43,7 @@ public class RandomBinder {
     private void setMealData(MealsItem meal) {
         if (meal != null) {
             titleText.setText(meal.getStrMeal());
-            String instructions = meal.getStrInstructions();
+            String instructions = meal.getStrArea() +" recipe";
 
             descriptionText.setText(instructions);
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView android:id="@+id/cardView"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
@@ -49,10 +50,9 @@
 
             <TextView
                 android:id="@+id/dishDescription"
-                style="@style/Text4"
-                android:layout_width="246dp"
+                style="Text5"
+                android:layout_width="0dp"
                 android:layout_height="46dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="4dp"
                 android:ellipsize="end"
@@ -60,7 +60,7 @@
                 android:text="Chicken Biryani is a delicious savory rice dish that is loaded..."
                 android:textColor="#565656"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/foodImage"
+                app:layout_constraintStart_toStartOf="@+id/dishTitle"
                 app:layout_constraintTop_toBottomOf="@+id/dishTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CatMealsAdapter extends RecyclerView.Adapter<CatMealsAdapter.CatMealsViewHolder> {
     private final List<MealsItem> meals;
-    private OnMealClickListener onMealClickListener;
+    private final OnMealClickListener onMealClickListener;
 
     public CatMealsAdapter(List<MealsItem> meals, OnMealClickListener onMealClickListener) {
         this.meals = meals;
@@ -45,23 +45,19 @@ public class CatMealsAdapter extends RecyclerView.Adapter<CatMealsAdapter.CatMea
                     onMealClickListener.onMealClick(meal);
                 }
             });
-            // Set title
+
             holder.titleText.setText(meal.getStrMeal() != null ?
                     meal.getStrMeal() : "No title");
-            // Load image
-            if (meal.getStrMealThumb() != null && !meal.getStrMealThumb().isEmpty()) {
-                try {
-                    Glide.with(holder.itemView.getContext())
-                            .load(meal.getStrMealThumb())
-                            .placeholder(R.drawable.ic_favorite)
-                            .error(R.drawable.ic_favorite)
-                            .into(holder.foodImage);
-                } catch (Exception e) {
-                    holder.foodImage.setImageResource(R.drawable.ic_favorite);
-                }
-            } else {
-                holder.foodImage.setImageResource(R.drawable.ic_favorite);
-            }
+            String areaKitchen =  meal.getStrArea() +" recipe";
+
+            holder.areaText.setText(areaKitchen);
+
+            Glide.with(holder.itemView.getContext())
+                    .load(meal.getStrMealThumb())
+                    .placeholder(R.drawable.ic_favorite)
+                    .error(R.drawable.ic_favorite)
+                    .into(holder.foodImage);
+
         }
     }
 
@@ -72,13 +68,13 @@ public class CatMealsAdapter extends RecyclerView.Adapter<CatMealsAdapter.CatMea
 
     static class CatMealsViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleText;
-//        private final TextView descriptionText;
+        private final TextView areaText;
         private final ImageView foodImage;
 
         public CatMealsViewHolder(@NonNull View itemView) {
             super(itemView);
             titleText = itemView.findViewById(R.id.dishTitle);
-//            descriptionText = itemView.findViewById(R.id.dishDescription);
+            areaText = itemView.findViewById(R.id.dishDescription);
             foodImage = itemView.findViewById(R.id.foodImage);
         }
 

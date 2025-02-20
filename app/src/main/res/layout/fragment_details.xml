@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".details.view.details.DetailsFragment">
 
             <ImageView
@@ -35,21 +40,34 @@
 
             <TextView
                 android:id="@+id/textTitle"
+                style="@style/Heading2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
+                android:ellipsize="end"
                 android:text="@string/title"
-                style="@style/Heading2"
                 android:textColor="@color/BlackishGrey"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/meal_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#565656"
+                style="Text5"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintStart_toStartOf="@+id/textTitle"
+                app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+
             <LinearLayout
-                android:backgroundTint="@color/WarmWhite"
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="@color/WarmWhite"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -60,15 +78,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+
                     android:backgroundTint="@color/WarmWhite"
-                    app:tabGravity="start"
+                    app:tabGravity="center"
+                    app:tabIndicatorGravity="bottom"
                     app:tabMode="scrollable" />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/pager"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:minHeight="400dp">
 
                 </androidx.viewpager2.widget.ViewPager2>
 
@@ -79,7 +100,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonLike"
+        android:id="@+id/like_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -88,11 +109,14 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_favorite_border"
+        android:scaleType="center"
+        app:fabCustomSize="40dp"
+        app:maxImageSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -101,8 +125,13 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/vector_1"
+        android:scaleType="center"
+        app:fabCustomSize="40dp"
+        app:maxImageSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

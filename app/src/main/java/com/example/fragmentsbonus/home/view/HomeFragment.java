@@ -21,7 +21,7 @@ import com.example.fragmentsbonus.models.categories.CategoriesItem;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 import com.example.fragmentsbonus.home.presenter.categories.CategoriesPresenter;
 import com.example.fragmentsbonus.home.presenter.categories.CategoriesPresenterImplementation;
-import com.example.fragmentsbonus.home.presenter.random_meal.RandomBinder;
+import com.example.fragmentsbonus.home.view.random_meal.RandomBinder;
 import com.example.fragmentsbonus.home.presenter.random_meal.RandomMealPresenter;
 import com.example.fragmentsbonus.home.presenter.random_meal.RandomMealPresenterImplementation;
 import com.example.fragmentsbonus.home.view.categories.CategoriesAdapter;
@@ -46,9 +46,7 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

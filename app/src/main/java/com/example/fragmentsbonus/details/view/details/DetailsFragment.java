@@ -31,7 +31,7 @@ public class DetailsFragment extends Fragment implements DetailsView {
     private DetailsPresenter presenter;
     private MealsItem meal;
     private TextView titleText;
-//    private TextView descText;
+    private TextView country;
     private ImageView mealImage;
     private FloatingActionButton fabLike, fabBack;
 
@@ -51,10 +51,10 @@ public class DetailsFragment extends Fragment implements DetailsView {
         viewPager = view.findViewById(R.id.pager);
         tabLayout = view.findViewById(R.id.tab_layout_details);
         titleText = view.findViewById(R.id.textTitle);
-//        descText = view.findViewById(R.id.textdesc);
+        country = view.findViewById(R.id.meal_country);
         mealImage = view.findViewById(R.id.imageView3);
-        fabLike = view.findViewById(R.id.floatingActionButtonLike);
-        fabBack = view.findViewById(R.id.floatingActionButton);
+        fabLike = view.findViewById(R.id.like_button);
+        fabBack = view.findViewById(R.id.back_button);
     }
 
     private void setupViewPager() {
@@ -71,7 +71,11 @@ public class DetailsFragment extends Fragment implements DetailsView {
     }
 
     private void setupClickListeners() {
-        fabBack.setOnClickListener(v -> requireActivity().onBackPressed());
+        fabBack.setOnClickListener(v -> {
+            // Use NavController to navigate back
+            androidx.navigation.Navigation.findNavController(requireView()).navigateUp();
+        });
+
         fabLike.setOnClickListener(v -> {
             // Implement favorite functionality
         });
@@ -101,7 +105,8 @@ public class DetailsFragment extends Fragment implements DetailsView {
     @Override
     public void displayMealDetails(MealsItem meal) {
         titleText.setText(meal.getStrMeal());
-//        descText.setText(meal.getStrInstructions());
+        String area = meal.getStrArea() +" recipe";
+        country.setText(area);
         String imageUrl = meal.getStrMealThumb();
         Glide.with(requireContext())
                 .load(imageUrl)
