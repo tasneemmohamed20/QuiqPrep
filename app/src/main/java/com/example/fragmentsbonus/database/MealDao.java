@@ -7,14 +7,17 @@ import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+
 @Dao
 public interface MealDao {
     @Query("SELECT * FROM meals")
-    LiveData<List<MealsItem>> getAllMeals();
+    Flowable<List<MealsItem>> getAllMeals();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertMeal(MealsItem meal);
+    Completable insertMeal(MealsItem meal);
 
     @Delete
-    void deleteMeal(MealsItem meal);
+    Completable deleteMeal(MealsItem meal);
 }

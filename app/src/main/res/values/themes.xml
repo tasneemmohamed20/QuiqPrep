@@ -10,8 +10,23 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/DarkRed</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
+
     </style>
 
+    <style name="CenteredTitleTheme" parent="Theme.MaterialComponents.Light">
+        <item name="actionBarStyle">@style/Widget.AppCompat.Light.ActionBar.Centered</item>
+    </style>
+
+    <style name="Widget.AppCompat.Light.ActionBar.Centered" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="displayOptions">useLogo|showHome|showTitle</item>
+        <item name="android:gravity">center</item>
+        <item name="titleTextStyle">@style/ActionBarTitle.Center</item>
+    </style>
+
+    <style name="ActionBarTitle.Center" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 
     <style name="Theme.FragmentsBonus" parent="Base.Theme.FragmentsBonus" />
 </resources>

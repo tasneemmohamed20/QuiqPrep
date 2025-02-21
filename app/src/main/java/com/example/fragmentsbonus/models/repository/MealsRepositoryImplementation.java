@@ -1,7 +1,5 @@
 package com.example.fragmentsbonus.models.repository;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.fragmentsbonus.database.MealsLocalDataSource;
 import com.example.fragmentsbonus.models.categories.CategoryResponse;
 import com.example.fragmentsbonus.models.meals.MealResponse;
@@ -11,6 +9,8 @@ import com.example.fragmentsbonus.network.MealsRemoteDataSource;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 public class MealsRepositoryImplementation implements  MealsRepository {
@@ -31,7 +31,7 @@ public class MealsRepositoryImplementation implements  MealsRepository {
     }
 
     @Override
-    public LiveData<List<MealsItem>> getStoredMeals() {
+    public Flowable<List<MealsItem>> getStoredMeals() {
         return localDataSource.getAllStoredMeals();
     }
 
@@ -62,12 +62,12 @@ public class MealsRepositoryImplementation implements  MealsRepository {
 
     // Local Data Source Methods
     @Override
-    public void insertMeal(MealsItem mealsItem) {
-        localDataSource.insertMeal(mealsItem);
+    public Completable insertMeal(MealsItem mealsItem) {
+        return Completable.fromAction(() -> localDataSource.insertMeal(mealsItem).blockingAwait());
     }
 
     @Override
-    public void deleteMeal(MealsItem mealsItem) {
-        localDataSource.deleteMeal(mealsItem);
+    public Completable deleteMeal(MealsItem mealsItem) {
+        return Completable.fromAction(() -> localDataSource.deleteMeal(mealsItem).blockingAwait());
     }
 }

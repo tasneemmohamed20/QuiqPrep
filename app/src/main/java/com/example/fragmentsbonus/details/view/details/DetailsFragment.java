@@ -17,12 +17,13 @@ import com.bumptech.glide.Glide;
 import com.example.fragmentsbonus.R;
 import com.example.fragmentsbonus.details.presenter.details.DetailsPresenter;
 import com.example.fragmentsbonus.details.presenter.details.DetailsPresenterImp;
+import com.example.fragmentsbonus.favorites.view.click_listener.OnLikeClickListener;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class DetailsFragment extends Fragment implements DetailsView {
+public class DetailsFragment extends Fragment implements DetailsView , OnLikeClickListener {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
     private DetailsAdapter pagerAdapter;
@@ -31,6 +32,8 @@ public class DetailsFragment extends Fragment implements DetailsView {
     private TextView country;
     private ImageView mealImage;
     private FloatingActionButton fabLike, fabBack;
+    private MealsItem meal;
+    private boolean isFavorite;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +43,7 @@ public class DetailsFragment extends Fragment implements DetailsView {
         initViews(view);
         setupViewPager();
         setupClickListeners();
-
+//        onLikeClick(meal);
         return view;
     }
 
@@ -56,8 +59,8 @@ public class DetailsFragment extends Fragment implements DetailsView {
 
     private void setupViewPager() {
         assert getArguments() != null;
-        MealsItem meal = getArguments().getParcelable("meal");
-        presenter = new DetailsPresenterImp(this, meal);
+        meal = getArguments().getParcelable("meal");
+        presenter = new DetailsPresenterImp(this, meal, requireContext());
         pagerAdapter = new DetailsAdapter(requireActivity(), meal);
 
         viewPager.setAdapter(pagerAdapter);
@@ -69,13 +72,19 @@ public class DetailsFragment extends Fragment implements DetailsView {
     }
 
     private void setupClickListeners() {
-        fabBack.setOnClickListener(v -> {
-            // Use NavController to navigate back
-            androidx.navigation.Navigation.findNavController(requireView()).navigateUp();
-        });
+        fabBack.setOnClickListener(v ->
+                androidx.navigation.Navigation.findNavController(requireView()).navigateUp()
+        );
 
+        // Fixed like button click listener
         fabLike.setOnClickListener(v -> {
-            // Implement favorite functionality
+            if (meal != null) {
+                if (!isFavorite) {
+                    presenter.addMealToFavorite(meal);
+                } else {
+                    presenter.removeMealFromFavorite(meal);
+                }
+            }
         });
     }
 
@@ -110,6 +119,32 @@ public class DetailsFragment extends Fragment implements DetailsView {
         super.onDestroy();
         if (presenter != null) {
             presenter.detachView();
+        }
+    }
+
+    @Override
+    public void onLikeClick(MealsItem meal) {
+//        fabLike.setOnClickListener(v -> {
+//            if (meal != null) {
+//                if (!isFavorite) {
+//                    meal.setFavorite(true);
+//                    presenter.addMealToFavorite(meal);
+//                } else {
+//                    meal.setFavorite(false);
+//                    presenter.removeMealFromFavorite(meal);
+//                }
+//            }
+//        });
+    }
+
+    @Override
+    public void updateFavoriteStatus(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+        meal.setFavorite(isFavorite);
+        if (isFavorite) {
+            fabLike.setImageResource(R.drawable.ic_favorite);
+        } else {
+            fabLike.setImageResource(R.drawable.ic_favorite_border);
         }
     }
 }

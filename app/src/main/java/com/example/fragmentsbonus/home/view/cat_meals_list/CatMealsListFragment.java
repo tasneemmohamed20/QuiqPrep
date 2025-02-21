@@ -74,9 +74,6 @@ public class CatMealsListFragment extends Fragment implements CatMealsView, OnMe
     @Override
     public void onMealClick(MealsItem meal) {
         Bundle args = new Bundle();
-//        args.putString("idMeal", meal.getIdMeal());
-//        args.putString("strMeal", meal.getStrMeal());
-//        args.putString("strMealThumb", meal.getStrMealThumb());
         args.putParcelable("meal", meal);
         Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailsFragment, args);
     }

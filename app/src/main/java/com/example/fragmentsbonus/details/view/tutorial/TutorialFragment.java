@@ -77,7 +77,7 @@ public class TutorialFragment extends Fragment implements TutorialView {
                 "<style>" +
                 "body { margin: 0; padding: 0; }" +
                 ".video-container { position: relative; width: 100%; height: 100vh;}" +
-                ".video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }" +
+                ".video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 80%; overflow: hidden; }" +
                 "</style>" +
                 "</head>" +
                 "<body>" +

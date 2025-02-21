@@ -23,4 +23,8 @@
     <string name="welcome">Hello, </string>
     <string name="description">description</string>
     <string name="title">Title</string>
+    <string name="planner">Planner</string>
+    <string name="favorites">Favorites</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
 </resources>

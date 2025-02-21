@@ -5,4 +5,5 @@ import com.example.fragmentsbonus.models.meals.MealsItem;
 public interface DetailsView {
     void showError(String message);
     void displayMealDetails(MealsItem meal);
+    void updateFavoriteStatus(boolean isFavorite);
 }

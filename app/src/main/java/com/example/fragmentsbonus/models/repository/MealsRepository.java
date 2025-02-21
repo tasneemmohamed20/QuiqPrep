@@ -8,16 +8,18 @@ import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface MealsRepository {
-  LiveData<List<MealsItem>> getStoredMeals();
+  Flowable<List<MealsItem>> getStoredMeals();
   Single<MealResponse> getRandomMeals();
   Single<CategoryResponse> getCategories();
   Single<MealResponse> getMealsByCategory(String category);
   Single<MealResponse> getMealById(String id);
-  void insertMeal(MealsItem mealsItem);
-  void deleteMeal(MealsItem mealsItem);
+  Completable insertMeal(MealsItem mealsItem);
+  Completable deleteMeal(MealsItem mealsItem);
   void dispose();
 
 }

@@ -1,13 +1,14 @@
 package com.example.fragmentsbonus.database;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+
 public interface MealsLocalDataSource {
-    void insertMeal(MealsItem meal);
-    void deleteMeal(MealsItem meal);
-    LiveData<List<MealsItem>> getAllStoredMeals();
+    Completable insertMeal(MealsItem meal);
+    Completable deleteMeal(MealsItem meal);
+    Flowable<List<MealsItem>> getAllStoredMeals();
 }

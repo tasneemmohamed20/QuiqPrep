@@ -8,6 +8,9 @@ import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+
 public class MealLocalDataSourceImp implements MealsLocalDataSource {
     private final MealDao mealsDao;
     private static MealLocalDataSourceImp instance;
@@ -25,27 +28,17 @@ public class MealLocalDataSourceImp implements MealsLocalDataSource {
     }
 
     @Override
-    public void insertMeal(MealsItem meal) {
-        new Thread(() -> {
-            mealsDao.insertMeal(meal);
-        }).start();
-
+    public Completable insertMeal(MealsItem meal) {
+        return mealsDao.insertMeal(meal);
     }
 
     @Override
-    public void deleteMeal(MealsItem meal) {
-        new Thread(() -> {
-            mealsDao.deleteMeal(meal);
-        }).start();
+    public Completable deleteMeal(MealsItem meal) {
+        return mealsDao.deleteMeal(meal);
     }
 
     @Override
-    public LiveData<List<MealsItem>> getAllStoredMeals() {
-        try {
-            return mealsDao.getAllMeals();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public Flowable<List<MealsItem>> getAllStoredMeals() {
+        return mealsDao.getAllMeals();
     }
 }

@@ -158,6 +158,9 @@ public class MealsItem implements Parcelable{
 	@SerializedName("strMeasure15")
 	private String strMeasure15;
 
+	private boolean isFavorite;
+
+
 	public String getStrImageSource(){
 		return strImageSource;
 	}
@@ -349,6 +352,8 @@ public class MealsItem implements Parcelable{
 	public String getStrMeasure15(){
 		return strMeasure15;
 	}
+
+	public boolean isFavorite() {return isFavorite;}
 
 
 	public void setStrImageSource(String strImageSource) {
@@ -543,7 +548,10 @@ public class MealsItem implements Parcelable{
 		this.strMeasure15 = strMeasure15;
 	}
 
-	public MealsItem(){}
+	public void setFavorite(boolean favorite) {isFavorite = favorite;}
+	public MealsItem(){
+		isFavorite = false;
+	}
 
 	protected  MealsItem(Parcel in){
 		strImageSource = in.readString();
