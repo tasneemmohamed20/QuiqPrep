@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fragmentsbonus.R;
+import com.example.fragmentsbonus.click_listener.OnMealClickListener;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.ArrayList;
@@ -19,8 +20,10 @@ import java.util.List;
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.ViewHolder> {
 
     private final List<MealsItem> meals = new ArrayList<>();
+    private final OnMealClickListener onMealClickListener;
 
-    public FavoritesAdapter(List<MealsItem> meals) {
+    public FavoritesAdapter(List<MealsItem> meals, OnMealClickListener onMealClickListener) {
+        this.onMealClickListener = onMealClickListener;
         this.meals.addAll(meals);
     }
 
@@ -34,6 +37,13 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MealsItem meal = meals.get(position);
+        if (meal != null) {
+            holder.itemView.setOnClickListener(v -> {
+                if (onMealClickListener != null) {
+                    onMealClickListener.onMealClick(meal);
+                }
+            });
+        }
         holder.tvTitle.setText(meal.getStrMeal());
         String area = meal.getStrArea() +" recipe";
         holder.tvArea.setText(area);

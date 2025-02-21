@@ -19,6 +19,7 @@ import com.example.fragmentsbonus.details.presenter.details.DetailsPresenter;
 import com.example.fragmentsbonus.details.presenter.details.DetailsPresenterImp;
 import com.example.fragmentsbonus.favorites.view.click_listener.OnLikeClickListener;
 import com.example.fragmentsbonus.models.meals.MealsItem;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -42,8 +43,8 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
 
         initViews(view);
         setupViewPager();
-        setupClickListeners();
-//        onLikeClick(meal);
+//        setupClickListeners();
+        onLikeClick(meal);
         return view;
     }
 
@@ -69,23 +70,6 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(pagerAdapter.getTitle(position))
         ).attach();
-    }
-
-    private void setupClickListeners() {
-        fabBack.setOnClickListener(v ->
-                androidx.navigation.Navigation.findNavController(requireView()).navigateUp()
-        );
-
-        // Fixed like button click listener
-        fabLike.setOnClickListener(v -> {
-            if (meal != null) {
-                if (!isFavorite) {
-                    presenter.addMealToFavorite(meal);
-                } else {
-                    presenter.removeMealFromFavorite(meal);
-                }
-            }
-        });
     }
 
     @Override
@@ -124,17 +108,13 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
 
     @Override
     public void onLikeClick(MealsItem meal) {
-//        fabLike.setOnClickListener(v -> {
-//            if (meal != null) {
-//                if (!isFavorite) {
-//                    meal.setFavorite(true);
-//                    presenter.addMealToFavorite(meal);
-//                } else {
-//                    meal.setFavorite(false);
-//                    presenter.removeMealFromFavorite(meal);
-//                }
-//            }
-//        });
+        fabBack.setOnClickListener(v ->
+                androidx.navigation.Navigation.findNavController(requireView()).navigateUp()
+        );
+
+        fabLike.setOnClickListener(v -> {
+            presenter.handleLikeButtonClick(meal, isFavorite);
+        });
     }
 
     @Override
@@ -146,5 +126,24 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
         } else {
             fabLike.setImageResource(R.drawable.ic_favorite_border);
         }
+    }
+
+    @Override
+    public void showDeleteConfirmation(MealsItem meal) {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Remove from Favorites")
+                .setMessage("Are you sure you want to remove this meal from favorites?")
+                .setPositiveButton("Remove", (dialog, which) -> {
+                    presenter.removeMealFromFavorite(meal);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    @Override
+    public void showDeleteMessage(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

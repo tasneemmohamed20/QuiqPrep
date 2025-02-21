@@ -8,5 +8,7 @@ public interface DetailsPresenter {
 
     void addMealToFavorite(MealsItem mealsItem);
     void removeMealFromFavorite(MealsItem mealsItem);
+    void onDeleteConfirmed(MealsItem mealsItem);
+    void handleLikeButtonClick(MealsItem meal, boolean isFavorite);
 
 }

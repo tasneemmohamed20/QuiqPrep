@@ -6,4 +6,6 @@ public interface DetailsView {
     void showError(String message);
     void displayMealDetails(MealsItem meal);
     void updateFavoriteStatus(boolean isFavorite);
+    void showDeleteConfirmation(MealsItem meal);
+    void showDeleteMessage(String message);
 }

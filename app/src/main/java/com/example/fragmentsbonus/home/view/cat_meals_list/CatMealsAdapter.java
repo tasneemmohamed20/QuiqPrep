@@ -1,6 +1,5 @@
 package com.example.fragmentsbonus.home.view.cat_meals_list;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fragmentsbonus.R;
 
-import com.example.fragmentsbonus.home.view.click_listener.OnMealClickListener;
+import com.example.fragmentsbonus.click_listener.OnMealClickListener;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 
 import java.util.List;

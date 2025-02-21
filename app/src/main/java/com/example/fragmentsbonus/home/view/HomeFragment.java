@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fragmentsbonus.R;
-import com.example.fragmentsbonus.home.view.click_listener.OnMealClickListener;
+import com.example.fragmentsbonus.click_listener.OnMealClickListener;
 import com.example.fragmentsbonus.models.categories.CategoriesItem;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 import com.example.fragmentsbonus.home.presenter.categories.CategoriesPresenter;

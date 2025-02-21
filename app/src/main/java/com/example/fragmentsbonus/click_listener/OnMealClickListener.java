@@ -1,4 +1,4 @@
-package com.example.fragmentsbonus.home.view.click_listener;
+package com.example.fragmentsbonus.click_listener;
 
 import com.example.fragmentsbonus.models.meals.MealsItem;
 

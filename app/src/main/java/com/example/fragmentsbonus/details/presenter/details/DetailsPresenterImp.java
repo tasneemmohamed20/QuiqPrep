@@ -109,4 +109,21 @@ public class DetailsPresenterImp implements DetailsPresenter {
                 });
     }
 
+    @Override
+    public void onDeleteConfirmed(MealsItem mealsItem) {
+        removeMealFromFavorite(mealsItem);
+    }
+
+    @Override
+    public void handleLikeButtonClick(MealsItem meal, boolean isFavorite) {
+        if(meal != null){
+            if(!isFavorite){
+                addMealToFavorite(meal);
+            } else {
+                view.showDeleteConfirmation(meal);
+            }
+        }
+    }
+
+
 }

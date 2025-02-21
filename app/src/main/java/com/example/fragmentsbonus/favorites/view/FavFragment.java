@@ -3,6 +3,7 @@ package com.example.fragmentsbonus.favorites.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fragmentsbonus.R;
+import com.example.fragmentsbonus.click_listener.OnMealClickListener;
 import com.example.fragmentsbonus.database.MealLocalDataSourceImp;
 import com.example.fragmentsbonus.favorites.persenter.FavoritesPresenter;
 import com.example.fragmentsbonus.favorites.persenter.FavoritesPresenterImp;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FavFragment extends Fragment implements FavoritesView {
+public class FavFragment extends Fragment implements FavoritesView, OnMealClickListener {
     private RecyclerView recyclerView;
     private FavoritesAdapter adapter;
     private FavoritesPresenter presenter;
@@ -39,17 +41,18 @@ public class FavFragment extends Fragment implements FavoritesView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new FavoritesPresenterImp((FavoritesView) this, MealsRepositoryImplementation.getInstance(MealsRemoteDataSourceImplementation.getInstance(), MealLocalDataSourceImp.getInstance(requireContext())));
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
-        recyclerView = view.findViewById(R.id.recyclerView);
-        progressBar = view.findViewById(R.id.progressBar3);
+        View view = inflater.inflate(R.layout.fragment_fav, container, false);
+        recyclerView = view.findViewById(R.id.recyclerViewFav);
+        progressBar = view.findViewById(R.id.progressBar4);
         presenter.getFavorites();
-        adapter = new FavoritesAdapter(new ArrayList<>());
+        adapter = new FavoritesAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         return view;
@@ -74,5 +77,12 @@ public class FavFragment extends Fragment implements FavoritesView {
     @Override
     public void hideLoading() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onMealClick(MealsItem meal) {
+        Bundle args = new Bundle();
+        args.putParcelable("meal", meal);
+        Navigation.findNavController(requireView()).navigate(R.id.action_favFragment_to_detailsFragment, args);
     }
 }
