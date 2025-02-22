@@ -53,8 +53,8 @@ public class DetailsPresenterImp implements DetailsPresenter {
         view = null;
     }
 
-
-    private void checkFavoriteStatus() {
+    @Override
+    public void checkFavoriteStatus() {
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
@@ -72,11 +72,48 @@ public class DetailsPresenterImp implements DetailsPresenter {
     }
 
     @Override
-    public void addMealToFavorite(MealsItem mealsItem) {
+    public void checkScheduleStatus(MealsItem meal) {
+        if (meal == null) return;
+
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
 
+        disposable = repository.getStoredMeals()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mealsItems -> {
+                    boolean isScheduled = mealsItems.stream()
+                            .anyMatch( item ->
+                                    {
+                                        return (item.getIdMeal().equals(meal.getIdMeal())
+                                                && (item.getScheduleDate() != null || !item.getScheduleDate().isEmpty()));
+                                    }
+                            );
+
+                    if (view != null) {
+                        view.updateScheduleStatus(isScheduled);
+                    }
+                }, throwable -> Log.e(TAG, "Error checking schedule status", throwable));
+    }
+    
+    @Override
+    public void handleScheduleButtonClick(MealsItem meal) {
+        if (meal != null) {
+            if (meal.getScheduleDate() == null) {
+                view.showDatePicker();
+            } else {
+                view.showUnScheduleConfirmation(meal);
+            }
+        }
+    }
+
+    @Override
+    public void addMealToFavorite(MealsItem mealsItem) {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+            meal.setFavorite(true);
         disposable = repository.insertMeal(mealsItem)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -96,16 +133,21 @@ public class DetailsPresenterImp implements DetailsPresenter {
             disposable.dispose();
         }
 
+        mealsItem.setFavorite(false);
         disposable = repository.deleteMeal(mealsItem)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(() -> {
-                    Toast.makeText(context, "Meal removed from favorites", Toast.LENGTH_SHORT).show();
-                    view.updateFavoriteStatus(false);
-                    checkFavoriteStatus();
+                    if (view != null) {
+                        Toast.makeText(context, "Meal removed from favorites", Toast.LENGTH_SHORT).show();
+                        view.updateFavoriteStatus(false);
+                    }
+
                 }, throwable -> {
-                    view.showError("Failed to remove from favorites");
-                    Log.e(TAG, "Error removing from favorites", throwable);
+                    if (view != null) {
+                        view.showError("Failed to remove from favorites");
+                        Log.e(TAG, "Error removing from favorites", throwable);
+                    }
                 });
     }
 
@@ -125,5 +167,39 @@ public class DetailsPresenterImp implements DetailsPresenter {
         }
     }
 
+    @Override
+    public void addMealToSchedule(MealsItem meal) {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+
+        disposable = repository.scheduleMeal(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    view.updateScheduleStatus(true);
+                    Toast.makeText(context, "Meal scheduled", Toast.LENGTH_SHORT).show();
+//                    checkScheduleStatus(meal);
+                }, throwable -> view.showError("Failed to schedule meal"));
+    }
+
+    @Override
+    public void removeMealFromSchedule(MealsItem meal) {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+
+        meal.setScheduleDate(null);
+        disposable = repository.deleteScheduledMeal(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    if (view != null) {
+                        view.updateScheduleStatus(false);
+                        Toast.makeText(context, "Meal unscheduled", Toast.LENGTH_SHORT).show(); // Fix message
+                    }
+//                    checkScheduleStatus(meal);
+                }, throwable -> view.showError("Failed to unschedule meal"));
+    }
 
 }

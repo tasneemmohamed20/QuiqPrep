@@ -54,12 +54,16 @@ dependencies {
     implementation(libs.glide)
     implementation (libs.viewpager2)
     implementation(libs.recyclerview)
+    implementation(libs.protolite.well.known.types)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.converter.gson)
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
+
+
+
 
 
 

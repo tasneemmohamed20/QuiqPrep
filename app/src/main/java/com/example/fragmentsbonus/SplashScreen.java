@@ -2,17 +2,18 @@ package com.example.fragmentsbonus;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Insets;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -29,8 +30,18 @@ public class SplashScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
+
+        View rootView = findViewById(R.id.main);
+        if (rootView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
+                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                return insets;
+            });
+        }
 
         // Setup Navigation
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
@@ -38,56 +49,62 @@ public class SplashScreen extends AppCompatActivity {
         navController = navHostFragment.getNavController();
 
         // Setup ActionBar
-        NavigationUI.setupActionBarWithNavController(this, navController);
+//        NavigationUI.setupActionBarWithNavController(this, navController);
 
         // Setup BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.hide();
+//        }
 
         // Handle visibility of both bars
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             if (destination.getId() == R.id.splashFragment
-                || destination.getId() == R.id.onBoardingFragment
+                    || destination.getId() == R.id.onBoardingFragment
                     || destination.getId() == R.id.loginOptionFragment
                     || destination.getId() == R.id.emailLoginFragment
                     || destination.getId() == R.id.emailSignupFragment
-                    || destination.getId() == R.id.detailsFragment
-            ) {
-                // Hide both bars on splash screen
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().hide();
-                }
+                    || destination.getId() == R.id.detailsFragment) {
+
+//                hideSystemBars();
                 bottomNavigationView.setVisibility(View.GONE);
+
             } else if (destination.getId() == R.id.favFragment
                     || destination.getId() == R.id.searchFragment
-                    || destination.getId() == R.id.plannerFragment) {
-                // Show both bars on main screens
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().show();
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                }
-                bottomNavigationView.setVisibility(View.VISIBLE);
-            } else if (destination.getId() == R.id.homeFragment) {
-                // Hide action bar but show bottom nav on home screen
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().hide();
-                }
-                bottomNavigationView.setVisibility(View.VISIBLE);
-            } else {
-                // Show action bar but hide bottom nav on other screens
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().show();
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                }
-                bottomNavigationView.setVisibility(View.GONE);
-            }
+                    || destination.getId() == R.id.plannerFragment
+                    || destination.getId() == R.id.homeFragment) {
 
+//                showSystemBars();
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
         });
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        return navController.navigateUp() || super.onSupportNavigateUp();
+    private void hideSystemBars() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
     }
+
+    private void showSystemBars() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.show();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
+//
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        return navController.navigateUp() || super.onSupportNavigateUp();
+//    }
 }

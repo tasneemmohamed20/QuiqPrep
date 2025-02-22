@@ -7,5 +7,7 @@ public interface DetailsView {
     void displayMealDetails(MealsItem meal);
     void updateFavoriteStatus(boolean isFavorite);
     void showDeleteConfirmation(MealsItem meal);
-    void showDeleteMessage(String message);
+    void updateScheduleStatus(boolean isScheduled);
+    void showUnScheduleConfirmation(MealsItem meal);
+    void showDatePicker();
 }

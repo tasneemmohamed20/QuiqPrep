@@ -20,4 +20,17 @@ public interface MealDao {
 
     @Delete
     Completable deleteMeal(MealsItem meal);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable scheduleMeal(MealsItem meal);
+
+    @Query("SELECT * FROM meals WHERE scheduleDate = :date")
+    Flowable<List<MealsItem>> getMealsForDate(String date);
+
+    @Delete
+    Completable deleteScheduledMeal(MealsItem meal);
+
+    @Query("SELECT * FROM meals WHERE isFavorite = 1")
+    Flowable<List<MealsItem>> getFavoriteMeals();
+
 }

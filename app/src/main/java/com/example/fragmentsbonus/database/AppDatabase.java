@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.fragmentsbonus.models.meals.MealsItem;
 
-@Database(entities = {MealsItem.class}, version = 1)
+@Database(entities = {MealsItem.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract MealDao mealsDao();
     private static AppDatabase instance;

@@ -41,4 +41,24 @@ public class MealLocalDataSourceImp implements MealsLocalDataSource {
     public Flowable<List<MealsItem>> getAllStoredMeals() {
         return mealsDao.getAllMeals();
     }
+
+    @Override
+    public Completable scheduleMeal(MealsItem meal) {
+        return mealsDao.scheduleMeal(meal);
+    }
+
+    @Override
+    public Flowable<List<MealsItem>> getMealsForDate(String date) {
+        return mealsDao.getMealsForDate(date);
+    }
+
+    @Override
+    public Completable deleteScheduledMeal(MealsItem meal) {
+        return mealsDao.deleteScheduledMeal(meal);
+    }
+
+    @Override
+    public Flowable<List<MealsItem>> getFavoriteMeals() {
+        return mealsDao.getFavoriteMeals();
+    }
 }

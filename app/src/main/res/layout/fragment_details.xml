@@ -41,9 +41,9 @@
             <TextView
                 android:id="@+id/textTitle"
                 style="@style/Heading2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:text="@string/title"
@@ -51,16 +51,38 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="8dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                app:icon="@drawable/unscheduled"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="24dp"
+                app:iconTint="@color/DarkRed"
+                app:cornerRadius="20dp"
+                app:backgroundTint="@color/WarmWhite"
+                style="@style/Widget.Material3.Button.IconButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/textTitle" />
+
             <TextView
                 android:id="@+id/meal_country"
+                style="Text5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="#565656"
-                style="Text5"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                 app:layout_constraintStart_toStartOf="@+id/textTitle"
-                app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/textTitle"
+                app:layout_constraintVertical_bias="0.0" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -103,33 +125,32 @@
         android:id="@+id/like_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/WarmWhite"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_favorite_border"
         android:scaleType="center"
+        android:src="@drawable/ic_favorite_border"
         app:fabCustomSize="40dp"
-        app:maxImageSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/back_button"
+        app:maxImageSize="24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/WarmWhite"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/vector_1"
         android:scaleType="center"
+        android:src="@drawable/vector_1"
         app:fabCustomSize="40dp"
-        app:maxImageSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxImageSize="24dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

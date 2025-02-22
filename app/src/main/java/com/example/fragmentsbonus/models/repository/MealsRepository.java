@@ -1,6 +1,5 @@
 package com.example.fragmentsbonus.models.repository;
 
-import androidx.lifecycle.LiveData;
 
 import com.example.fragmentsbonus.models.categories.CategoryResponse;
 import com.example.fragmentsbonus.models.meals.MealResponse;
@@ -20,6 +19,8 @@ public interface MealsRepository {
   Single<MealResponse> getMealById(String id);
   Completable insertMeal(MealsItem mealsItem);
   Completable deleteMeal(MealsItem mealsItem);
-  void dispose();
+  Completable scheduleMeal(MealsItem meal);
+  Completable deleteScheduledMeal(MealsItem meal);
+  Flowable<List<MealsItem>> getFavoriteMeals();
 
 }

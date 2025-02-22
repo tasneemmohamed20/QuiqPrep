@@ -22,7 +22,7 @@ public class FavoritesPresenterImp implements FavoritesPresenter {
     @Override
     public void getFavorites() {
         view.showLoading();
-        disposable = repository.getStoredMeals()
+        disposable = repository.getFavoriteMeals()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(meals -> {
@@ -54,4 +54,6 @@ public class FavoritesPresenterImp implements FavoritesPresenter {
         }
         view = null;
     }
+
+
 }

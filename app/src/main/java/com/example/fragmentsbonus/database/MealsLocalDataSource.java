@@ -11,4 +11,8 @@ public interface MealsLocalDataSource {
     Completable insertMeal(MealsItem meal);
     Completable deleteMeal(MealsItem meal);
     Flowable<List<MealsItem>> getAllStoredMeals();
+    Completable scheduleMeal(MealsItem meal);
+    Flowable <List<MealsItem>> getMealsForDate(String date);
+    Completable deleteScheduledMeal(MealsItem meal);
+    Flowable<List<MealsItem>> getFavoriteMeals();
 }

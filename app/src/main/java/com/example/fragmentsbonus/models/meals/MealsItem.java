@@ -160,7 +160,12 @@ public class MealsItem implements Parcelable{
 
 	private boolean isFavorite;
 
+	private String scheduleDate;
 
+
+	public String getScheduleDate() {
+		return scheduleDate;
+	}
 	public String getStrImageSource(){
 		return strImageSource;
 	}
@@ -356,6 +361,9 @@ public class MealsItem implements Parcelable{
 	public boolean isFavorite() {return isFavorite;}
 
 
+	public void setScheduleDate(String scheduleDate) {
+		this.scheduleDate = scheduleDate;
+	}
 	public void setStrImageSource(String strImageSource) {
 		this.strImageSource = strImageSource;
 	}
@@ -602,6 +610,8 @@ public class MealsItem implements Parcelable{
 		strMeasure17 = in.readString();
 		strMeasure14 = in.readString();
 		strMeasure15 = in.readString();
+		isFavorite = in.readByte() != 0;
+		scheduleDate = in.readString();
 	}
 
 	public static final Parcelable.Creator<MealsItem> CREATOR = new Parcelable.Creator<MealsItem>() {
@@ -669,6 +679,8 @@ public class MealsItem implements Parcelable{
 		dest.writeString(strMeasure17);
 		dest.writeString(strMeasure14);
 		dest.writeString(strMeasure15);
+		dest.writeByte((byte) (isFavorite ? 1 : 0));
+		dest.writeString(scheduleDate);
 	}
 
 

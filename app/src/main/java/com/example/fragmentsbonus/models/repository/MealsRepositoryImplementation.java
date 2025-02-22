@@ -31,11 +31,6 @@ public class MealsRepositoryImplementation implements  MealsRepository {
     }
 
     @Override
-    public Flowable<List<MealsItem>> getStoredMeals() {
-        return localDataSource.getAllStoredMeals();
-    }
-
-    @Override
     public Single<MealResponse> getRandomMeals() {
         return remoteDataSource.getRandomMeals();
     }
@@ -55,19 +50,112 @@ public class MealsRepositoryImplementation implements  MealsRepository {
         return remoteDataSource.getMealById(id);
     }
 
-    @Override
-    public void dispose() {
-        remoteDataSource.dispose();
-    }
 
     // Local Data Source Methods
+
     @Override
-    public Completable insertMeal(MealsItem mealsItem) {
-        return Completable.fromAction(() -> localDataSource.insertMeal(mealsItem).blockingAwait());
+    public Flowable<List<MealsItem>> getStoredMeals() {
+        return localDataSource.getAllStoredMeals();
+    }
+
+    @Override
+    public Completable insertMeal(MealsItem meal) {
+        return getStoredMeals()
+                .firstElement()
+                .flatMapCompletable(meals -> {
+                    // Find existing meal if any
+                    MealsItem existingMeal = meals.stream()
+                            .filter(m -> m.getIdMeal().equals(meal.getIdMeal()))
+                            .findFirst()
+                            .orElse(null);
+
+                    // Preserve schedule date if exists
+                    if (existingMeal != null) {
+                        meal.setScheduleDate(existingMeal.getScheduleDate());
+                    }
+
+                    // Now insert the meal
+                    return Completable.fromAction(() ->
+                            localDataSource.insertMeal(meal).blockingAwait());
+                });
     }
 
     @Override
     public Completable deleteMeal(MealsItem mealsItem) {
-        return Completable.fromAction(() -> localDataSource.deleteMeal(mealsItem).blockingAwait());
+        return getStoredMeals()
+                .firstElement()
+                .flatMapCompletable(meals -> {
+                    // Find existing meal to check schedule date
+                    MealsItem existingMeal = meals.stream()
+                            .filter(m -> m.getIdMeal().equals(mealsItem.getIdMeal()))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (existingMeal != null) {
+                        // If meal has schedule date, keep it in DB with updated favorite status
+                        if (existingMeal.getScheduleDate() != null && !existingMeal.getScheduleDate().isEmpty()) {
+                            mealsItem.setScheduleDate(existingMeal.getScheduleDate());
+                            mealsItem.setFavorite(false);
+                            return localDataSource.insertMeal(mealsItem);
+                        } else {
+                            // If no schedule date, completely remove the meal
+                            return localDataSource.deleteMeal(mealsItem);
+                        }
+                    }
+                    return localDataSource.deleteMeal(mealsItem);
+                });
     }
+
+    @Override
+    public Completable scheduleMeal(MealsItem meal) {
+        return getStoredMeals()
+        .firstElement()
+                .flatMapCompletable(meals -> {
+                    // Find existing meal if any
+                    MealsItem existingMeal = meals.stream()
+                            .filter(m -> m.getIdMeal().equals(meal.getIdMeal()))
+                            .findFirst()
+                            .orElse(null);
+
+                    // Preserve favorite status if exists
+                    if (existingMeal != null) {
+                        meal.setFavorite(existingMeal.isFavorite());
+                    }
+
+                    // Now schedule the meal
+                    return Completable.fromAction(() ->
+                            localDataSource.scheduleMeal(meal).blockingAwait());
+                });
+    }
+
+    @Override
+    public Completable deleteScheduledMeal(MealsItem meal) {
+        return getStoredMeals()
+                .firstElement()
+                .flatMapCompletable(meals -> {
+                    // Find existing meal to preserve favorite status
+                    MealsItem existingMeal = meals.stream()
+                            .filter(m -> m.getIdMeal().equals(meal.getIdMeal()))
+                            .findFirst()
+                            .orElse(null);
+
+                        if (existingMeal != null && existingMeal.isFavorite()) {
+                            // If meal is favorite, keep it in DB with updated schedule status
+                            meal.setFavorite(existingMeal.isFavorite());
+                            meal.setScheduleDate(null);
+                            return localDataSource.insertMeal(meal);
+                        }else {
+                            // If not favorite, completely remove the meal
+                            return localDataSource.deleteScheduledMeal(meal);
+                        }
+//                    return localDataSource.deleteScheduledMeal(meal);
+                });
+    }
+
+    @Override
+    public Flowable<List<MealsItem>> getFavoriteMeals() {
+        return localDataSource.getFavoriteMeals();
+    }
+
+
 }

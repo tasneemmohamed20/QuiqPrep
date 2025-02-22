@@ -1,9 +1,11 @@
 package com.example.fragmentsbonus.details.view.details;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
@@ -19,10 +21,16 @@ import com.example.fragmentsbonus.details.presenter.details.DetailsPresenter;
 import com.example.fragmentsbonus.details.presenter.details.DetailsPresenterImp;
 import com.example.fragmentsbonus.favorites.view.click_listener.OnLikeClickListener;
 import com.example.fragmentsbonus.models.meals.MealsItem;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import java.util.Date;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class DetailsFragment extends Fragment implements DetailsView , OnLikeClickListener {
     private ViewPager2 viewPager;
@@ -35,6 +43,7 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
     private FloatingActionButton fabLike, fabBack;
     private MealsItem meal;
     private boolean isFavorite;
+    MaterialButton calendarButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,10 +51,19 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
         View view = inflater.inflate(R.layout.fragment_details, container, false);
 
         initViews(view);
+
         setupViewPager();
-//        setupClickListeners();
         onLikeClick(meal);
+
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        presenter.loadMealDetails();
+        setupCalendarButton();
     }
 
     private void initViews(View view) {
@@ -56,6 +74,8 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
         mealImage = view.findViewById(R.id.imageView3);
         fabLike = view.findViewById(R.id.like_button);
         fabBack = view.findViewById(R.id.back_button);
+        calendarButton = view.findViewById(R.id.button);
+
     }
 
     private void setupViewPager() {
@@ -72,10 +92,43 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
         ).attach();
     }
 
+    private void setupCalendarButton() {
+        presenter.checkScheduleStatus(meal);
+        calendarButton.setOnClickListener(v -> {
+            if (meal != null) {
+                presenter.handleScheduleButtonClick(meal);
+            }
+        });
+
+    }
+
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        presenter.loadMealDetails();
+    public void showDatePicker() {
+        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Schedule Meal")
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .build();
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String dateString = sdf.format(new Date(selection));
+            meal.setScheduleDate(dateString);
+            presenter.addMealToSchedule(meal);
+        });
+
+        datePicker.show(getParentFragmentManager(), "MEAL_SCHEDULER");
+    }
+
+    @Override
+    public void showUnScheduleConfirmation(MealsItem meal) {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Scheduled Meal")
+                .setMessage("This meal is already scheduled. What would you like to do?")
+                .setPositiveButton("Reschedule", (dialog, which) -> showDatePicker())
+                .setNegativeButton("Remove", (dialog, which) ->
+                        presenter.removeMealFromSchedule(meal))
+                .setNeutralButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     @Override
@@ -129,6 +182,18 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
     }
 
     @Override
+    public void updateScheduleStatus(boolean isScheduled) {
+        if (isScheduled){
+            calendarButton.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.scheduled));
+            calendarButton.setIconTint(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.DarkRed)));
+
+        } else {
+            calendarButton.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.unscheduled));
+            calendarButton.setIconTint(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.BlackishGrey)));
+        }
+    }
+
+    @Override
     public void showDeleteConfirmation(MealsItem meal) {
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Remove from Favorites")
@@ -142,8 +207,4 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
                 .show();
     }
 
-    @Override
-    public void showDeleteMessage(String message) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-    }
 }

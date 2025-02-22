@@ -27,4 +27,6 @@
     <string name="favorites">Favorites</string>
     <string name="search">Search</string>
     <string name="home">Home</string>
+    <string name="no_meals_planned">No meals planned for this date</string>
+    <string name="add_meal">Add Meal</string>
 </resources>

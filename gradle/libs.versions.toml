@@ -10,6 +10,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.0"
 constraintlayout = "2.2.0"
+materialCalendarViewVersion = "1.9.0"
 retrofit = "2.11.0"
 roomRuntime = "2.6.1"
 roomCompiler = "2.6.1"
@@ -21,6 +22,7 @@ viewpager2 = "1.1.0"
 recyclerview = "1.4.0"
 rxjava3RetrofitAdapter = "3.0.0"
 roomRxjava3 = "2.6.1"
+protoliteWellKnownTypes = "18.0.0"
 
 [libraries]
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
@@ -47,6 +49,7 @@ viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpag
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 rxjava3-retrofit-adapter = { module = "com.github.akarnokd:rxjava3-retrofit-adapter", version.ref = "rxjava3RetrofitAdapter" }
 room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "roomRxjava3" }
+protolite-well-known-types = { group = "com.google.firebase", name = "protolite-well-known-types", version.ref = "protoliteWellKnownTypes" }
 
 
 [plugins]
