@@ -10,7 +10,7 @@
         android:title="@string/search" />
     <item
         android:id="@+id/plannerFragment"
-        android:icon="@drawable/ic_favorite"
+        android:icon="@drawable/scheduled"
         android:title="@string/planner" />
     <item
         android:id="@+id/favFragment"

@@ -1,54 +1,59 @@
 package com.example.fragmentsbonus;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.fragmentsbonus.splash.presenter.SplashPresenter;
+import com.example.fragmentsbonus.splash.presenter.SplashPresenterImp;
+import com.example.fragmentsbonus.splash.view.SplashView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+public class SplashFragment extends Fragment implements SplashView {
 
-public class SplashFragment extends Fragment {
-
-    private FirebaseAuth mAuth;
-
-    public SplashFragment() {
-        // Required empty public constructor
-    }
+    private SplashPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
+        presenter = new SplashPresenterImp(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_splash, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        new Handler().postDelayed(() -> {
-            FirebaseUser currentUser = mAuth.getCurrentUser();
-            if (currentUser != null) {
-                SplashFragmentDirections.ActionSplashFragmentToHomeFragment action =
-                    SplashFragmentDirections.actionSplashFragmentToHomeFragment(false);
-                Navigation.findNavController(view)
-                    .navigate(action);
-            } else {
-                Navigation.findNavController(view)
+        presenter.checkAuthStatus();
+    }
+
+    @Override
+    public void navigateToHome(boolean isGuest) {
+        if (getView() != null) {
+            SplashFragmentDirections.ActionSplashFragmentToHomeFragment action =
+                    SplashFragmentDirections.actionSplashFragmentToHomeFragment(isGuest);
+            Navigation.findNavController(getView()).navigate(action);
+        }
+    }
+
+    @Override
+    public void navigateToOnBoarding() {
+        if (getView() != null) {
+            Navigation.findNavController(getView())
                     .navigate(R.id.action_splashFragment_to_onBoardingFragment);
-            }        }, 3000);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.onDestroy();
     }
 }

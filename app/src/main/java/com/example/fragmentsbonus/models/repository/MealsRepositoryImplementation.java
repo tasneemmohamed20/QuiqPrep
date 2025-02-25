@@ -187,5 +187,10 @@ public class MealsRepositoryImplementation implements  MealsRepository {
         return localDataSource.syncFromFirestore();
     }
 
+    @Override
+    public Completable clearAllData() {
+        return localDataSource.clearAllData();
+    }
+
 
 }

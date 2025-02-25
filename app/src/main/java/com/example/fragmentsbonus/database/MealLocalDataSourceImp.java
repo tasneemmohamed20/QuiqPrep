@@ -117,4 +117,9 @@ public class MealLocalDataSourceImp implements MealsLocalDataSource {
                     });
         });
     }
+
+    @Override
+    public Completable clearAllData() {
+        return mealsDao.clearAllData();
+    }
 }

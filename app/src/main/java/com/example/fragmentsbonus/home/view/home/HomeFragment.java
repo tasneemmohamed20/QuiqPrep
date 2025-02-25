@@ -1,4 +1,4 @@
-package com.example.fragmentsbonus.home.view;
+package com.example.fragmentsbonus.home.view.home;
 
 import android.os.Bundle;
 
@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.FragmentNavigator;
 import androidx.viewpager2.widget.ViewPager2;
@@ -14,12 +13,14 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.fragmentsbonus.R;
 import com.example.fragmentsbonus.click_listener.OnMealClickListener;
+import com.example.fragmentsbonus.home.presenter.home.HomePresenter;
+import com.example.fragmentsbonus.home.presenter.home.HomePresenterImp;
 import com.example.fragmentsbonus.models.categories.CategoriesItem;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 import com.example.fragmentsbonus.home.presenter.categories.CategoriesPresenter;
@@ -30,7 +31,6 @@ import com.example.fragmentsbonus.home.presenter.random_meal.RandomMealPresenter
 import com.example.fragmentsbonus.home.view.categories.CategoriesAdapter;
 import com.example.fragmentsbonus.home.view.categories.CategoriesView;
 import com.example.fragmentsbonus.home.view.random_meal.RandomMealView;
-import com.example.fragmentsbonus.search.view.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
@@ -39,7 +39,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements RandomMealView, CategoriesView, OnMealClickListener {
+public class HomeFragment extends Fragment implements RandomMealView, CategoriesView, OnMealClickListener, HomeView {
 
     private CategoriesAdapter categoriesAdapter;
     ProgressBar progressBar;
@@ -48,7 +48,11 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
     TextView userName;
     RandomBinder binder;
     private  boolean isGuest = false;
+    private HomePresenter homePresenter;
     BottomNavigationView bottomNavigationView;
+    ImageView logout;
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -70,6 +74,7 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        homePresenter = new HomePresenterImp(this, this.requireContext());
         if (getArguments() != null){
             isGuest = HomeFragmentArgs.fromBundle(getArguments()).getGuest();
         }
@@ -86,6 +91,7 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         userName = view.findViewById(R.id.username);
         binder = new RandomBinder();
         binder.setOnMealClickListener(this);
+        logout = view.findViewById(R.id.logout);
 
         TabLayout tabLayout = view.findViewById(R.id.tab_layout_details);
         ViewPager2 viewPager = view.findViewById(R.id.pager);
@@ -130,9 +136,21 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         super.onViewCreated(view, savedInstanceState);
         presenter = new RandomMealPresenterImplementation(this, requireContext());
         presenter.loadRandomMeal();
-
+        homePresenter.loadUserName();
         CategoriesPresenter presenter = new CategoriesPresenterImplementation(this, requireContext());
         presenter.loadCategories();
+
+        logout.setOnClickListener(v -> {
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Logout")
+                    .setMessage("Are you sure you want to logout?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        homePresenter.logout();
+                    })
+                    .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                    .show();
+        });
+
         if (isGuest){
             userName.setText("Guest");
             bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
@@ -191,6 +209,8 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         super.onDestroy();
         if (presenter != null)
             presenter.detachView();
+        if (homePresenter != null)
+            homePresenter.onDestroy();
     }
 
     @Override
@@ -200,4 +220,20 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         bundle.putBoolean("Guest", isGuest);
         Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailsFragment, bundle);
     }
+
+    @Override
+    public void displayUserName(String name) {
+        userName.setText(name);
+    }
+
+    @Override
+    public void navigateToLogin() {
+        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_loginOptionFragment);
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
 }

@@ -29,5 +29,6 @@ public interface MealsRepository {
   Completable deleteScheduledMeal(MealsItem meal);
   Flowable<List<MealsItem>> getFavoriteMeals();
   Completable syncFromFirestore();
+  Completable clearAllData();
 
 }

@@ -1,13 +1,10 @@
 package com.example.fragmentsbonus.auth.login_by_email.view;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +13,7 @@ import android.widget.Toast;
 import com.example.fragmentsbonus.R;
 import com.example.fragmentsbonus.auth.login_by_email.persenter.EmailLoginPresenter;
 import com.example.fragmentsbonus.auth.login_by_email.persenter.EmailLoginPresenterImp;
-import com.example.fragmentsbonus.database.MealLocalDataSourceImp;
-import com.example.fragmentsbonus.models.repository.MealsRepositoryImplementation;
-import com.example.fragmentsbonus.network.MealsRemoteDataSourceImplementation;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class EmailLoginFragment extends Fragment implements EmailLoginView {
     TextInputLayout emailInputLayout, passwordInputLayout;

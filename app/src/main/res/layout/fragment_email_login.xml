@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/WarmWhite"
     android:backgroundTint="@color/WarmWhite"
-    tools:context=".EmailSignupFragment">
+    tools:context=".auth.signup_by_email.view.EmailSignupFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

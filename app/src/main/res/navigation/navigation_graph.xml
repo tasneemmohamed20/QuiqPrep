@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/onBoardingFragment"
-        android:name="com.example.fragmentsbonus.OnBoardingFragment"
+        android:name="com.example.fragmentsbonus.splash.view.OnBoardingFragment"
         android:label="On Boarding"
         tools:layout="@layout/fragment_on_boarding">
         <action
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/emailSignupFragment"
-        android:name="com.example.fragmentsbonus.EmailSignupFragment"
+        android:name="com.example.fragmentsbonus.auth.signup_by_email.view.EmailSignupFragment"
         android:label="fragment_email_login"
         tools:layout="@layout/fragment_email_signup" >
         <action
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.fragmentsbonus.home.view.HomeFragment"
+        android:name="com.example.fragmentsbonus.home.view.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action

@@ -33,4 +33,6 @@ public interface MealDao {
     @Query("SELECT * FROM meals WHERE isFavorite = 1")
     Flowable<List<MealsItem>> getFavoriteMeals();
 
+    @Query("DELETE FROM meals")
+    Completable clearAllData();
 }
