@@ -34,7 +34,7 @@ public class PlannerPresenterImp implements PlannerPresenter {
         this.view = view;
         this.context = context;
         this.repository = MealsRepositoryImplementation.getInstance(
-                MealsRemoteDataSourceImplementation.getInstance(),
+                MealsRemoteDataSourceImplementation.getInstance(context),
                 MealLocalDataSourceImp.getInstance(context)
         );
     }

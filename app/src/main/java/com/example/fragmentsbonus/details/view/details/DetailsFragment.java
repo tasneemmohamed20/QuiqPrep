@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
     private FloatingActionButton fabLike, fabBack;
     private MealsItem meal;
     private boolean isFavorite;
+    private boolean isGuest;
     MaterialButton calendarButton;
 
     @Override
@@ -81,6 +83,7 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
     private void setupViewPager() {
         assert getArguments() != null;
         meal = getArguments().getParcelable("meal");
+        isGuest = getArguments().getBoolean("Guest");
         presenter = new DetailsPresenterImp(this, meal, requireContext());
         pagerAdapter = new DetailsAdapter(requireActivity(), meal);
 
@@ -93,13 +96,16 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
     }
 
     private void setupCalendarButton() {
-        presenter.checkScheduleStatus(meal);
-        calendarButton.setOnClickListener(v -> {
-            if (meal != null) {
-                presenter.handleScheduleButtonClick(meal);
-            }
-        });
-
+        if (isGuest) {
+            calendarButton.setOnClickListener(v -> showLoginRequiredDialog());
+        }else {
+            presenter.checkScheduleStatus(meal);
+            calendarButton.setOnClickListener(v -> {
+                if (meal != null) {
+                    presenter.handleScheduleButtonClick(meal);
+                }
+            });
+        }
     }
 
     @Override
@@ -117,6 +123,18 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
         });
 
         datePicker.show(getParentFragmentManager(), "MEAL_SCHEDULER");
+    }
+    @Override
+    public void showLoginRequiredDialog() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Login Required")
+                .setMessage("You should login to use this feature")
+                .setPositiveButton("Login", (dialog, which) -> {
+                    Navigation.findNavController(requireView())
+                            .navigate(R.id.action_detailsFragment_to_loginOptionFragment);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     @Override
@@ -165,9 +183,13 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
                 androidx.navigation.Navigation.findNavController(requireView()).navigateUp()
         );
 
-        fabLike.setOnClickListener(v -> {
-            presenter.handleLikeButtonClick(meal, isFavorite);
-        });
+        if (isGuest) {
+            fabLike.setOnClickListener(v -> showLoginRequiredDialog());
+        } else {
+            fabLike.setOnClickListener(v -> {
+                presenter.handleLikeButtonClick(meal, isFavorite);
+            });
+        }
     }
 
     @Override

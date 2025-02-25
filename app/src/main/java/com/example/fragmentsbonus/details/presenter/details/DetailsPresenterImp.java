@@ -33,7 +33,7 @@ public class DetailsPresenterImp implements DetailsPresenter {
         this.view = view;
         this.meal = meal;
         this.context = context;
-        MealsRemoteDataSource remoteDataSource = MealsRemoteDataSourceImplementation.getInstance();
+        MealsRemoteDataSource remoteDataSource = MealsRemoteDataSourceImplementation.getInstance(context);
         MealsLocalDataSource localDataSource = MealLocalDataSourceImp.getInstance(context);
         repository = MealsRepositoryImplementation.getInstance(remoteDataSource, localDataSource);
         checkFavoriteStatus();

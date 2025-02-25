@@ -18,7 +18,7 @@ public class CatMealsPresenterImplementation implements  CatMealsPresenter {
 
         this.view = view;
         this.repository = MealsRepositoryImplementation
-                .getInstance(MealsRemoteDataSourceImplementation.getInstance(),
+                .getInstance(MealsRemoteDataSourceImplementation.getInstance(context),
                         MealLocalDataSourceImp.getInstance(context));
     }
 

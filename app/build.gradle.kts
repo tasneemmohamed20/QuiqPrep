@@ -3,7 +3,6 @@ plugins {
     id("com.google.gms.google-services")
     id ("androidx.navigation.safeargs")
     id("kotlin-parcelize")
-
 }
 
 android {
@@ -61,10 +60,11 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
-
-
-
-
-
+    implementation(libs.play.services.auth)
+    implementation(libs.credentials)
+    implementation(libs.googleid)
+    implementation (libs.play.services.auth.v2070)
+    implementation (libs.firebase.auth.v2231)
+    implementation(libs.firebase.firestore)
 
 }

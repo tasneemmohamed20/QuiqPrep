@@ -42,8 +42,10 @@ public class SplashFragment extends Fragment {
         new Handler().postDelayed(() -> {
             FirebaseUser currentUser = mAuth.getCurrentUser();
             if (currentUser != null) {
+                SplashFragmentDirections.ActionSplashFragmentToHomeFragment action =
+                    SplashFragmentDirections.actionSplashFragmentToHomeFragment(false);
                 Navigation.findNavController(view)
-                    .navigate(R.id.action_splashFragment_to_homeFragment);
+                    .navigate(action);
             } else {
                 Navigation.findNavController(view)
                     .navigate(R.id.action_splashFragment_to_onBoardingFragment);

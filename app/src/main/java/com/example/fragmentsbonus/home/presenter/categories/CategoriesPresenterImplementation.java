@@ -17,7 +17,7 @@ public class CategoriesPresenterImplementation implements  CategoriesPresenter {
 
     public CategoriesPresenterImplementation(CategoriesView view,Context context) {
         this.view = view;
-        this.repository = MealsRepositoryImplementation.getInstance(MealsRemoteDataSourceImplementation.getInstance(), MealLocalDataSourceImp.getInstance(context));
+        this.repository = MealsRepositoryImplementation.getInstance(MealsRemoteDataSourceImplementation.getInstance(context), MealLocalDataSourceImp.getInstance(context));
     }
 
     @Override

@@ -14,6 +14,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealsRepositoryImplementation implements  MealsRepository {
     private final MealsRemoteDataSource remoteDataSource;
@@ -83,6 +84,7 @@ public class MealsRepositoryImplementation implements  MealsRepository {
     public Completable insertMeal(MealsItem meal) {
         return getStoredMeals()
                 .firstElement()
+                .subscribeOn(Schedulers.io())
                 .flatMapCompletable(meals -> {
                     // Find existing meal if any
                     MealsItem existingMeal = meals.stream()
@@ -97,7 +99,9 @@ public class MealsRepositoryImplementation implements  MealsRepository {
 
                     // Now insert the meal
                     return Completable.fromAction(() ->
-                            localDataSource.insertMeal(meal).blockingAwait());
+                            localDataSource.insertMeal(meal)
+                                    .blockingAwait()
+                    );
                 });
     }
 
@@ -176,6 +180,11 @@ public class MealsRepositoryImplementation implements  MealsRepository {
     @Override
     public Flowable<List<MealsItem>> getFavoriteMeals() {
         return localDataSource.getFavoriteMeals();
+    }
+
+    @Override
+    public Completable syncFromFirestore() {
+        return localDataSource.syncFromFirestore();
     }
 
 

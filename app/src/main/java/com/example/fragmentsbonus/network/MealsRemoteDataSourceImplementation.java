@@ -1,6 +1,9 @@
 package com.example.fragmentsbonus.network;
 
 
+import android.content.Context;
+import android.net.http.NetworkException;
+
 import androidx.annotation.NonNull;
 
 import com.example.fragmentsbonus.models.categories.CategoryResponse;
@@ -17,8 +20,10 @@ public class MealsRemoteDataSourceImplementation implements MealsRemoteDataSourc
     private static final String TAG = "MealsClient";
     private static MealsRemoteDataSourceImplementation client = null;
     private final ApiService apiService;
+    Context context;
 
-    private MealsRemoteDataSourceImplementation() {
+    private MealsRemoteDataSourceImplementation(Context context) {
+        this.context = context;
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(api_strings.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -28,51 +33,56 @@ public class MealsRemoteDataSourceImplementation implements MealsRemoteDataSourc
         apiService = retrofit.create(ApiService.class);
     }
 
-    public static synchronized MealsRemoteDataSourceImplementation getInstance(){
+    public static synchronized MealsRemoteDataSourceImplementation getInstance(Context context) {
         if(client == null){
-            client = new MealsRemoteDataSourceImplementation();
+            client = new MealsRemoteDataSourceImplementation(context);
         }
         return client;
     }
-
+    private Single<?> checkNetwork(Single<?> apiCall) {
+        if (!NetworkUtils.isNetworkAvailable(context)) {
+            return Single.error(new NetException("No internet connection. Please check your connection and try again."));
+        }
+        return apiCall;
+    }
     @Override
     public  Single<MealResponse> getRandomMeals() {
-        return apiService.getRandomMeal();
+        return (Single<MealResponse>) checkNetwork(apiService.getRandomMeal());
     }
 
     @Override
     public  Single<CategoryResponse> getCategories() {
-        return apiService.getCategories();
+        return (Single<CategoryResponse>) checkNetwork(apiService.getCategories());
     }
 
     @Override
     public  Single<MealResponse> getMealsByCategory(String category) {
-        return apiService.getMealByCategory(category);
+        return (Single<MealResponse>) checkNetwork(apiService.getMealByCategory(category));
     }
 
     @Override
     public Single<MealResponse> getMealById(String id) {
-        return apiService.getMealById(id);
+        return (Single<MealResponse>) checkNetwork(apiService.getMealById(id));
     }
 
     @Override
     public Single<IngredientResponse> getIngredients() {
-        return apiService.getIngredients();
+        return(Single<IngredientResponse>) checkNetwork(apiService.getIngredients());
     }
 
     @Override
     public Single<CountriesResponse> getCountries() {
-        return apiService.getCountries();
+        return (Single<CountriesResponse>) checkNetwork(apiService.getCountries());
     }
 
     @Override
     public Single<MealResponse> getMealsByIngredient(String ingredient) {
-        return apiService.getMealsByIngredient(ingredient);
+        return (Single<MealResponse>) checkNetwork(apiService.getMealsByIngredient(ingredient));
     }
 
     @Override
     public Single<MealResponse> getMealsByCountry(String country) {
-        return apiService.getMealsByCountry(country);
+        return (Single<MealResponse>) checkNetwork(apiService.getMealsByCountry(country));
     }
 
     @Override

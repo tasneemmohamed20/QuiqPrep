@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.FragmentNavigator;
 import androidx.viewpager2.widget.ViewPager2;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fragmentsbonus.R;
@@ -28,6 +30,9 @@ import com.example.fragmentsbonus.home.presenter.random_meal.RandomMealPresenter
 import com.example.fragmentsbonus.home.view.categories.CategoriesAdapter;
 import com.example.fragmentsbonus.home.view.categories.CategoriesView;
 import com.example.fragmentsbonus.home.view.random_meal.RandomMealView;
+import com.example.fragmentsbonus.search.view.SearchFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -40,14 +45,35 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
     ProgressBar progressBar;
     RandomMealPresenter presenter;
     CardView cardView, searchCard;
+    TextView userName;
     RandomBinder binder;
+    private  boolean isGuest = false;
+    BottomNavigationView bottomNavigationView;
     public HomeFragment() {
         // Required empty public constructor
     }
 
 
+    private void showLoginRequiredDialog() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Login Required")
+                .setMessage("You should login to use this feature")
+                .setPositiveButton("Login", (dialog, which) -> {
+                    // Navigate to login screen
+                    Navigation.findNavController(requireView())
+                            .navigate(R.id.action_homeFragment_to_loginOptionFragment);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null){
+            isGuest = HomeFragmentArgs.fromBundle(getArguments()).getGuest();
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +83,7 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         progressBar = view.findViewById(R.id.progressBar);
         cardView = view.findViewById(R.id.cardViewrand);
         searchCard = view.findViewById(R.id.searchCard);
+        userName = view.findViewById(R.id.username);
         binder = new RandomBinder();
         binder.setOnMealClickListener(this);
 
@@ -92,6 +119,9 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
                     extras
             );
         });
+        Toast.makeText(requireContext(), "isGuest = " + isGuest, Toast.LENGTH_SHORT).show();
+//        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+//        navController.navigate(R.id.action_homeFragment_to_loginOptionFragment);
         return view;
     }
 
@@ -103,8 +133,28 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
 
         CategoriesPresenter presenter = new CategoriesPresenterImplementation(this, requireContext());
         presenter.loadCategories();
+        if (isGuest){
+            userName.setText("Guest");
+            bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+            bottomNavigationView.setOnItemSelectedListener(item -> {
+                int itemId = item.getItemId();
+                // Only allow home and search for guests
+                if (itemId == R.id.homeFragment || itemId == R.id.searchFragment) {
+                    if (itemId == R.id.searchFragment) {
+                        Navigation.findNavController(requireView())
+                                .navigate(R.id.action_homeFragment_to_searchFragment);
+
+                    }
+                    return true;
+                } else {
+                    showLoginRequiredDialog();
+                    return false;
+                }
+            });
+        }
 
     }
+
 
     @Override
     public void showLoading() {
@@ -147,6 +197,7 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
     public void onMealClick(MealsItem meal) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("meal", meal);
+        bundle.putBoolean("Guest", isGuest);
         Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailsFragment, bundle);
     }
 }

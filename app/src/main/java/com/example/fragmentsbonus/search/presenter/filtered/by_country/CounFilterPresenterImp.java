@@ -25,7 +25,7 @@ public class CounFilterPresenterImp implements CounFilterPresenter{
     public CounFilterPresenterImp(FilteredView view, Context context) {
         this.view = view;
         this.repository = MealsRepositoryImplementation.getInstance(
-                MealsRemoteDataSourceImplementation.getInstance(),
+                MealsRemoteDataSourceImplementation.getInstance(context),
                 MealLocalDataSourceImp.getInstance(context)
         );
     }

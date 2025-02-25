@@ -15,4 +15,6 @@ public interface MealsLocalDataSource {
     Flowable <List<MealsItem>> getMealsForDate(String date);
     Completable deleteScheduledMeal(MealsItem meal);
     Flowable<List<MealsItem>> getFavoriteMeals();
+    Completable syncFromFirestore();
+
 }

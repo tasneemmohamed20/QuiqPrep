@@ -22,7 +22,7 @@ public class CountriesPresenterImp implements CountriesPresenter {
     private final MealsRepositoryImplementation repository;
 
     public CountriesPresenterImp(Context context, SearchView view) {
-        this.repository = MealsRepositoryImplementation.getInstance(MealsRemoteDataSourceImplementation.getInstance(), MealLocalDataSourceImp.getInstance(context));
+        this.repository = MealsRepositoryImplementation.getInstance(MealsRemoteDataSourceImplementation.getInstance(context), MealLocalDataSourceImp.getInstance(context));
         this.view = view;
     }
 

@@ -10,4 +10,5 @@ public interface DetailsView {
     void updateScheduleStatus(boolean isScheduled);
     void showUnScheduleConfirmation(MealsItem meal);
     void showDatePicker();
+    void showLoginRequiredDialog();
 }

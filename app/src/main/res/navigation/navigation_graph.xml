@@ -34,22 +34,30 @@
     </fragment>
     <fragment
         android:id="@+id/loginOptionFragment"
-        android:name="com.example.fragmentsbonus.LoginOptionFragment"
+        android:name="com.example.fragmentsbonus.auth.login_options.view.LoginOptionFragment"
         android:label="Login Options"
         tools:layout="@layout/fragment_login_option" >
         <argument
             android:name="test"
             app:argType="string" />
         <action
-            android:id="@+id/action_loginOptionFragment_to_emailLoginFragment"
+            android:id="@+id/action_loginOptionFragment_to_emailSignFragment"
             app:destination="@id/emailSignupFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_loginOptionFragment_to_emailLoginFragment2"
+            android:id="@+id/action_loginOptionFragment_to_emailLoginFragment"
             app:destination="@id/emailLoginFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginOptionFragment_to_homeFragment"
+            app:destination="@id/homeFragment" >
+            <argument
+                android:name="Guest"
+                app:argType="boolean"
+                android:defaultValue="false" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/emailSignupFragment"
@@ -64,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/emailLoginFragment"
-        android:name="com.example.fragmentsbonus.EmailLoginFragment"
+        android:name="com.example.fragmentsbonus.auth.login_by_email.view.EmailLoginFragment"
         android:label="fragment_email_login"
         tools:layout="@layout/fragment_email_login" >
         <action
@@ -100,6 +108,13 @@
             android:id="@+id/action_homeFragment_to_favFragment"
             app:destination="@id/favFragment"
             app:popUpTo="@id/homeFragment" />
+            <argument
+                android:name="Guest"
+                app:argType="boolean"
+                />
+        <action
+            android:id="@+id/action_homeFragment_to_loginOptionFragment"
+            app:destination="@id/loginOptionFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -121,6 +136,12 @@
     <argument
         android:name="meal"
         app:argType="com.example.fragmentsbonus.models.meals.MealsItem" />
+        <argument
+            android:name="Guest"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_detailsFragment_to_loginOptionFragment"
+            app:destination="@id/loginOptionFragment" />
     </fragment>
     <fragment
         android:id="@+id/plannerFragment"

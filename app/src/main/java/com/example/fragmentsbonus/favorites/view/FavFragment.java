@@ -40,7 +40,7 @@ public class FavFragment extends Fragment implements FavoritesView, OnMealClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new FavoritesPresenterImp((FavoritesView) this, MealsRepositoryImplementation.getInstance(MealsRemoteDataSourceImplementation.getInstance(), MealLocalDataSourceImp.getInstance(requireContext())));
+        presenter = new FavoritesPresenterImp((FavoritesView) this, MealsRepositoryImplementation.getInstance(MealsRemoteDataSourceImplementation.getInstance(requireContext()), MealLocalDataSourceImp.getInstance(requireContext())));
 
     }
 

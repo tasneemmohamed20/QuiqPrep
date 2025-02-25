@@ -12,7 +12,7 @@
     <string name="facebookway">Continue with Facebook</string>
     <string name="googleway">Continue with Google</string>
     <string name="haveaccount">Already have account?</string>
-    <string name="login">Login?</string>
+    <string name="login">Login</string>
     <string name="creatNewAccount">Create your Account</string>
     <string name="enteremail">E-mail</string>
     <string name="enterPassword">Password</string>
@@ -29,4 +29,6 @@
     <string name="home">Home</string>
     <string name="no_meals_planned">No meals planned for this date</string>
     <string name="add_meal">Add Meal</string>
+    <string name="default_web_client_id">740781462145-nfadb8hsk4mq73huve69j4gqcoqoa20e.apps.googleusercontent.com</string>
+
 </resources>
