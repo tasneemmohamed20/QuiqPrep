@@ -4,6 +4,8 @@ package com.example.fragmentsbonus.network;
 import androidx.annotation.NonNull;
 
 import com.example.fragmentsbonus.models.categories.CategoryResponse;
+import com.example.fragmentsbonus.models.countries.CountriesResponse;
+import com.example.fragmentsbonus.models.ingredients.IngredientResponse;
 import com.example.fragmentsbonus.models.meals.MealResponse;
 
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
@@ -51,6 +53,26 @@ public class MealsRemoteDataSourceImplementation implements MealsRemoteDataSourc
     @Override
     public Single<MealResponse> getMealById(String id) {
         return apiService.getMealById(id);
+    }
+
+    @Override
+    public Single<IngredientResponse> getIngredients() {
+        return apiService.getIngredients();
+    }
+
+    @Override
+    public Single<CountriesResponse> getCountries() {
+        return apiService.getCountries();
+    }
+
+    @Override
+    public Single<MealResponse> getMealsByIngredient(String ingredient) {
+        return apiService.getMealsByIngredient(ingredient);
+    }
+
+    @Override
+    public Single<MealResponse> getMealsByCountry(String country) {
+        return apiService.getMealsByCountry(country);
     }
 
     @Override

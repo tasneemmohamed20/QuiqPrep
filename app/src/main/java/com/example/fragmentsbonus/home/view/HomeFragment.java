@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
     private CategoriesAdapter categoriesAdapter;
     ProgressBar progressBar;
     RandomMealPresenter presenter;
-    CardView cardView;
+    CardView cardView, searchCard;
     RandomBinder binder;
     public HomeFragment() {
         // Required empty public constructor
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         progressBar = view.findViewById(R.id.progressBar);
         cardView = view.findViewById(R.id.cardViewrand);
+        searchCard = view.findViewById(R.id.searchCard);
         binder = new RandomBinder();
         binder.setOnMealClickListener(this);
 
@@ -68,7 +70,28 @@ public class HomeFragment extends Fragment implements RandomMealView, Categories
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(categoriesAdapter.getTitle(position))
         ).attach();
+        searchCard.setOnClickListener(v -> {
+            // Set transition names
+            searchCard.setTransitionName("searchTransition");
 
+            // Create extras for shared element transition
+            androidx.navigation.fragment.FragmentNavigator.Extras extras = new androidx.navigation.fragment.FragmentNavigator.Extras.Builder()
+                    .addSharedElement(searchCard, "searchTransition")
+                    .build();
+
+            // Create animation options
+            FragmentNavigator.Extras animExtras = new FragmentNavigator.Extras.Builder()
+                    .addSharedElement(searchCard, "searchTransition")
+                    .build();
+
+            // Navigate with transition
+            Navigation.findNavController(view).navigate(
+                    R.id.action_homeFragment_to_searchFragment,
+                    null,
+                    null,
+                    extras
+            );
+        });
         return view;
     }
 

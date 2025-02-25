@@ -2,6 +2,8 @@ package com.example.fragmentsbonus.models.repository;
 
 import com.example.fragmentsbonus.database.MealsLocalDataSource;
 import com.example.fragmentsbonus.models.categories.CategoryResponse;
+import com.example.fragmentsbonus.models.countries.CountriesResponse;
+import com.example.fragmentsbonus.models.ingredients.IngredientResponse;
 import com.example.fragmentsbonus.models.meals.MealResponse;
 import com.example.fragmentsbonus.models.meals.MealsItem;
 import com.example.fragmentsbonus.network.MealsRemoteDataSource;
@@ -50,6 +52,25 @@ public class MealsRepositoryImplementation implements  MealsRepository {
         return remoteDataSource.getMealById(id);
     }
 
+    @Override
+    public Single<IngredientResponse> getIngredients() {
+        return remoteDataSource.getIngredients();
+    }
+
+    @Override
+    public Single<CountriesResponse> getCountries() {
+        return remoteDataSource.getCountries();
+    }
+
+    @Override
+    public Single<MealResponse> getMealsByIngredient(String ingredient) {
+        return remoteDataSource.getMealsByIngredient(ingredient);
+    }
+
+    @Override
+    public Single<MealResponse> getMealsByCountry(String country) {
+        return remoteDataSource.getMealsByCountry(country);
+    }
 
     // Local Data Source Methods
 

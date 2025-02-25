@@ -90,6 +90,7 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment"
+            app:popEnterAnim="@transition/slide_in_up"
             app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_homeFragment_to_plannerFragment"
@@ -102,9 +103,16 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.fragmentsbonus.SearchFragment"
+        android:name="com.example.fragmentsbonus.search.view.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_allIngredientsFragment"
+            app:destination="@id/allIngredientsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_filteredMealsFragment"
+            app:destination="@id/filteredMealsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.fragmentsbonus.details.view.details.DetailsFragment"
@@ -130,6 +138,33 @@
         tools:layout="@layout/fragment_fav" >
         <action
             android:id="@+id/action_favFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allIngredientsFragment"
+        android:name="com.example.fragmentsbonus.search.view.all_ingredients.AllIngredientsFragment"
+        android:label="fragment_all_ingredients"
+        tools:layout="@layout/fragment_all_ingredients" >
+        <argument
+            android:name="ingredientsList"
+            app:argType="com.example.fragmentsbonus.models.ingredients.IngredientItem" />
+        <action
+            android:id="@+id/action_allIngredientsFragment_to_filteredMealsFragment"
+            app:destination="@id/filteredMealsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filteredMealsFragment"
+        android:name="com.example.fragmentsbonus.search.view.filtered.FilteredMealsFragment"
+        android:label="fragment_filtered_meals"
+        tools:layout="@layout/fragment_filtered_meals" >
+        <argument
+            android:name="filterType"
+            app:argType="string" />
+        <argument
+            android:name="sourceFragment"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_filteredMealsFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
     </fragment>
 </navigation>

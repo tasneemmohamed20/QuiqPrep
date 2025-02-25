@@ -95,6 +95,10 @@
         <item name="cornerSizeBottomRight">20dp</item>
     </style>
 
+    <style name="CircularImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">35dp</item>
+    </style>
 
     <style name="CustomCardCorners2" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners2</item>

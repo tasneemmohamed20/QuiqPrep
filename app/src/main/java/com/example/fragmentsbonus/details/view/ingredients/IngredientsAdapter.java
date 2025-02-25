@@ -42,7 +42,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
                 String ingredient = (String) mealClass.getMethod("get" + ingredientField).invoke(meal);
                 String measure = (String) mealClass.getMethod("get" + measureField).invoke(meal);
-                
+
                 Log.d("IngredientsAdapter", "Ingredient " + i + ": " + ingredient + ", Measure: " + measure);
 
 
@@ -62,7 +62,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingrediant_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingerdients_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -72,8 +72,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         holder.ingredient.setText(ingredient.first);
         holder.measure.setText(ingredient.second);
 
-        String imageUrl = "https://www.themealdb.com/images/ingredients/" + 
-        ingredient.first.replace(" ", "%20") + ".png";
+        String imageUrl = "https://www.themealdb.com/images/ingredients/" +
+                ingredient.first.replace(" ", "%20") + ".png";
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
                 .centerCrop()

@@ -6,7 +6,7 @@
         android:title="@string/home" />
     <item
         android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_favorite"
+        android:icon="@android:drawable/ic_menu_search"
         android:title="@string/search" />
     <item
         android:id="@+id/plannerFragment"

@@ -683,5 +683,4 @@ public class MealsItem implements Parcelable{
 		dest.writeString(scheduleDate);
 	}
 
-
 }

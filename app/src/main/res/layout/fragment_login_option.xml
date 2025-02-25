@@ -38,13 +38,20 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/signup_email"
                 style="@style/LightButton"
                 android:text="@string/Signupemail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/signup_email"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                style="@style/LightButton"-->
+<!--                android:text="Sign up with Email" />-->
 
             <View
                 android:id="@+id/divider1"
@@ -80,7 +87,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/signup_email"
                 app:layout_constraintTop_toBottomOf="@+id/signup_email" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button2"
                 style="@style/DarkButton"
                 android:layout_marginTop="28dp"
@@ -91,7 +98,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button3"
                 style="@style/DarkButton"
                 android:layout_marginTop="32dp"
