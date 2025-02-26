@@ -38,14 +38,14 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        View rootView = findViewById(R.id.main);
-        if (rootView != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
-                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-                return insets;
-            });
-        }
+//        View rootView = findViewById(R.id.main);
+//        if (rootView != null) {
+//            ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
+//                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//                return insets;
+//            });
+//        }
 
         // Setup Navigation
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
@@ -71,7 +71,10 @@ public class SplashScreen extends AppCompatActivity {
                     || destination.getId() == R.id.loginOptionFragment
                     || destination.getId() == R.id.emailLoginFragment
                     || destination.getId() == R.id.emailSignupFragment
-                    || destination.getId() == R.id.detailsFragment) {
+                    || destination.getId() == R.id.detailsFragment
+                    || destination.getId() == R.id.filteredMealsFragment
+                    || destination.getId() == R.id.allIngredientsFragment
+            ) {
 
                 try {
                     View decorView = getWindow().getDecorView();
