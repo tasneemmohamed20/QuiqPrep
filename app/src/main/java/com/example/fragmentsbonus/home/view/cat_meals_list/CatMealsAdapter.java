@@ -53,8 +53,8 @@ public class CatMealsAdapter extends RecyclerView.Adapter<CatMealsAdapter.CatMea
 
             Glide.with(holder.itemView.getContext())
                     .load(meal.getStrMealThumb())
-                    .placeholder(R.drawable.ic_favorite)
-                    .error(R.drawable.ic_favorite)
+                    .placeholder(R.drawable.logo_icon)
+                    .error(R.drawable.logo_icon)
                     .into(holder.foodImage);
 
         }

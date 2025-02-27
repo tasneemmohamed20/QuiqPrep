@@ -162,8 +162,8 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
         String imageUrl = meal.getStrMealThumb();
         Glide.with(requireContext())
                 .load(imageUrl)
-                .placeholder(R.drawable.ic_favorite)
-                .error(R.drawable.ic_favorite)
+                .placeholder(R.drawable.logo_icon)
+                .error(R.drawable.logo_icon)
                 .centerCrop()
                 .into(mealImage);
 
@@ -198,8 +198,11 @@ public class DetailsFragment extends Fragment implements DetailsView , OnLikeCli
         meal.setFavorite(isFavorite);
         if (isFavorite) {
             fabLike.setImageResource(R.drawable.ic_favorite);
+            fabLike.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.DarkRed)));
+
         } else {
             fabLike.setImageResource(R.drawable.ic_favorite_border);
+            fabLike.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.DarkRed)));
         }
     }
 

@@ -1,6 +1,5 @@
 package com.example.fragmentsbonus.search.view.countries;
 
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fragmentsbonus.R;
@@ -82,7 +80,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         put("tha", R.drawable.thailand);
         put("tun", R.drawable.tunisia);
         put("tur", R.drawable.turkey);
-        put("vie", R.drawable.vietnam);
+        put("vie", R.drawable.turkey);
         put("ukr", R.drawable.ukraine);
         put("uru", R.drawable.uruguay);
 

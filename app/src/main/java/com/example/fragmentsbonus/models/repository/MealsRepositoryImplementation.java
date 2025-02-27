@@ -92,7 +92,6 @@ public class MealsRepositoryImplementation implements  MealsRepository {
                             .findFirst()
                             .orElse(null);
 
-                    // Preserve schedule date if exists
                     if (existingMeal != null) {
                         meal.setScheduleDate(existingMeal.getScheduleDate());
                     }

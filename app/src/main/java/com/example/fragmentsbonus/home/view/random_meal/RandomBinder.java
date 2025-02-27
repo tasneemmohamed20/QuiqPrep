@@ -52,6 +52,7 @@ public class RandomBinder {
             Glide.with(rootView.getContext())
                     .load(meal.getStrMealThumb())
                     .centerCrop()
+                    .placeholder(R.drawable.logo_icon)
                     .into(foodImage);
         }
     }

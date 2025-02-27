@@ -84,6 +84,7 @@ public class SearchFragment extends Fragment implements SearchView {
         countriesRecycler = view.findViewById(R.id.countriesRecycler);
         ingredientsRecycler = view.findViewById(R.id.ingredientRecycler);
         categoriesRecycler = view.findViewById(R.id.CategotiesRecycler);
+
         // ingredients Recycler
         adapter = new IngredientAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
@@ -91,7 +92,6 @@ public class SearchFragment extends Fragment implements SearchView {
         ingredientsRecycler.setLayoutManager(layoutManager);
         ingredientsRecycler.setAdapter(adapter);
         OnIngredientClick();
-
 
         // countries Recycler
         countriesAdapter = new CountriesAdapter();
@@ -109,7 +109,7 @@ public class SearchFragment extends Fragment implements SearchView {
         categoriesRecycler.setAdapter(categoriesAdapter);
         OnCategoryClick();
 
-        // Initialize presenter
+        // Initialize presenters
         ingredientsPresenter = new IngredientsPresenterImp(this, requireContext());
         countriesPresenter = new CountriesPresenterImp(requireContext(), this);
         categoriesPresenter = new CategoriesPresenterImp( this,requireContext());
@@ -198,7 +198,6 @@ public class SearchFragment extends Fragment implements SearchView {
 
             args.putParcelableArrayList("ingredientsList", parcelableList);
 
-            // Navigate to AllIngredients fragment
             Navigation.findNavController(requireView())
                     .navigate(R.id.action_searchFragment_to_allIngredientsFragment, args);
 
@@ -231,7 +230,6 @@ public class SearchFragment extends Fragment implements SearchView {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(query -> {
-                            // Filter all three lists
                             filterLists(query);
                         })
         );
@@ -245,7 +243,7 @@ public class SearchFragment extends Fragment implements SearchView {
             countriesPresenter.getCountries();
             categoriesPresenter.getCategories();
         } else {
-            // Filter ingredients
+
             if (ingredientsList != null) {
                 List<IngredientItem> filteredIngredients = ingredientsList.stream()
                         .filter(ingredient ->
@@ -261,7 +259,6 @@ public class SearchFragment extends Fragment implements SearchView {
                 }
             }
 
-            // Filter countries and categories via presenters
             countriesPresenter.filterCountries(query);
             categoriesPresenter.filterCategories(query);
         }

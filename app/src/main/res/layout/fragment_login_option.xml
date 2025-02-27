@@ -98,16 +98,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button3"
-                style="@style/DarkButton"
-                android:layout_marginTop="32dp"
-                android:text="@string/facebookway"
-                app:layout_constraintCircleRadius="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.506"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Googlebutton" />
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/button3"-->
+<!--                style="@style/DarkButton"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:text="@string/facebookway"-->
+<!--                app:layout_constraintCircleRadius="15dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.506"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/Googlebutton" />-->
 
             <TextView
                 android:id="@+id/textView2"
@@ -119,8 +119,8 @@
                 android:text="@string/haveaccount"
                 android:textColor="#F2F2F2"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/button3"
-                app:layout_constraintTop_toBottomOf="@+id/button3" />
+                app:layout_constraintStart_toStartOf="@+id/Googlebutton"
+                app:layout_constraintTop_toBottomOf="@+id/Googlebutton" />
 
             <Button
                 android:id="@+id/textButton"
@@ -133,16 +133,16 @@
                 android:text="@string/login"
                 android:textColor="#F2F2F2"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/button3"
+                app:layout_constraintEnd_toEndOf="@+id/Googlebutton"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/button3" />
+                app:layout_constraintTop_toBottomOf="@+id/Googlebutton" />
 
             <Button
                 android:id="@+id/skipButton"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="81dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Skip"

@@ -103,9 +103,9 @@ public class MealLocalDataSourceImp implements MealsLocalDataSource {
                         // Insert all meals into local database
                         Completable.concat(meals.stream()
                                         .map(meal -> insertMeal(meal)
-                                                .subscribeOn(Schedulers.io())) // Add this line
+                                                .subscribeOn(Schedulers.io()))
                                         .collect(Collectors.toList()))
-                                .subscribeOn(Schedulers.io()) // Add this line
+                                .subscribeOn(Schedulers.io())
                                 .subscribe(
                                         () -> emitter.onComplete(),
                                         emitter::onError
